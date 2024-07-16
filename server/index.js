@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const connectDb = require("./database/db");
 
 const app = express();
@@ -15,15 +16,21 @@ const visitorRouter = require("./routes/visitor.routes");
 connectDb();
 
 // Handling CORS policy issue which occurs due to run two diffrent servers for frontend or backend
-const corsOption = {
+const corsOptions = {
   origin: process.env.BASE_URL,
-  method: "GET, POST, PUT, DELETE, PATCH, HEAD",
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
+  optionsSuccessStatus: 200, // For legacy browser support
 };
-app.use(cors(corsOption));
+
+app.use(cors(corsOptions));
 
 // Middlewares
 app.use(express.json()); // Middleware for parsing JSON bodies
+
+// Middleware to serve static files from the "uploads" directory
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API routes
 app.use("/api", articleRouter);
@@ -33,7 +40,7 @@ app.use("/api", visitorRouter);
 
 // Root route
 app.get("/", (req, res) => {
-  res.send("This is created by Anshuman Sinha");
+  res.send("This server is created by Anshuman Sinha");
 });
 
 // Start the server

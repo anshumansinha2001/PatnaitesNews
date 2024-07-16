@@ -3,10 +3,10 @@ import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
 
-const Footer = ({ theme }) => {
+const Footer = () => {
   return (
     <footer
-      className={`flex justify-between items-center bg-[#1c1c27] border-b border-[#66666645] text-neutral-content border-t-2 py-4 px-6 md:px-20 text-[10px] md:text-[1rem]`}
+      className={`flex justify-between items-center bg-[#1c1c27] border-b border-[#66666645] text-neutral-content border-t-2 py-4 px-6 md:px-20 text-[10px] md:text-[1rem] mt-10`}
     >
       <div className="flex gap-2 md:gap-4 justify-center items-center hover:text-white">
         <div>

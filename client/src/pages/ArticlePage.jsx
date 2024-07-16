@@ -95,6 +95,21 @@ const ArticlePage = () => {
         />
         <meta property="og:site_name" content="Patnaites" />
         <meta property="og:locale" content="en_IN" />
+
+        {/* Twitter Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={article.title || "NewsPortal"} />
+        <meta
+          name="twitter:description"
+          content={parse(article.content.slice(0, 150))}
+        />
+        <meta
+          name="twitter:image"
+          content={
+            article?.img ||
+            "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          }
+        />
       </Helmet>
 
       <img
@@ -104,8 +119,8 @@ const ArticlePage = () => {
         }
         alt="Failed to load image!"
         className={`w-full ${
-          !article.img ? "h-32 md:h-48" : "h-full"
-        } object-cover rounded-lg shadow-md mb-6`}
+          !article.img ? "h-32 md:h-48" : "h-[15rem] md:h-[20rem] lg:h-[28rem]"
+        } object-cove rounded-lg shadow-md mb-6`}
       />
       <div className="card-actions justify-between mb-4 font-semibold text-sm md:text-lg">
         <span>{moment(article.createdAt ?? "2023-05-25").fromNow()}</span>

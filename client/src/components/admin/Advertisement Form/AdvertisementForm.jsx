@@ -38,7 +38,7 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
         );
         if (response) {
           toast.info("Advertisement Updated!");
-          navigate(`${API}/dashboard/${updateAPI}`);
+          navigate(`/dashboard/${updateAPI}`);
         }
       } else {
         // Else, create a new advertisement

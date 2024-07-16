@@ -19,7 +19,7 @@ const PostForm = ({ post }) => {
       author: post?.author || "",
       isBreakingNews: post?.isBreakingNews || false,
       content: post?.content || "",
-      img: post?.img,
+      // img: post?.img,
     },
   });
 
@@ -35,16 +35,35 @@ const PostForm = ({ post }) => {
     setError(null);
 
     try {
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      if (data.image.length > 0) {
+        formData.append("image", data.image[0]);
+      }
+
       const response = post
-        ? await axios.put(`${API}/api/article/${post._id}`, data)
-        : await axios.post(`${API}/api/article`, data);
+        ? await axios.put(`${API}/api/article/${post._id}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+        : await axios.post(`${API}/api/article`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
 
       if (response) {
         toast.success(post ? "Article Updated!" : "Article Created!");
         navigate("/dashboard/articles");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Something went wrong!");
+      setError(
+        err.response?.data?.message ||
+          "Something went wrong! It could be due to server issues or an invalid image format."
+      );
     } finally {
       setLoading(false);
     }
@@ -74,7 +93,10 @@ const PostForm = ({ post }) => {
           )}
 
           <div className="mt-2">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-2 md: space-y-4"
+            >
               {/* Title */}
               <div className="form-control w-full">
                 <label className="label">
@@ -88,8 +110,20 @@ const PostForm = ({ post }) => {
                 />
               </div>
 
+              {/* Image  */}
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Image</span>
+                </label>
+                <input
+                  type="file"
+                  {...register("image")}
+                  className="file-input w-full"
+                />
+              </div>
+
               {/* Category & Author */}
-              <div className="flex items-center gap-4 my-6">
+              <div className="flex items-center gap-4">
                 <div className="form-control w-full">
                   <label className="label">
                     <span className="label-text">Category*</span>
@@ -144,19 +178,6 @@ const PostForm = ({ post }) => {
                   name="content"
                   control={control}
                   defaultValue={post?.content}
-                />
-              </div>
-
-              {/* Image URL */}
-              <div className="form-control w-full my-2">
-                <label className="label">
-                  <span className="label-text">Image URL</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("img")}
-                  placeholder="Type your image URL here..."
-                  className="input input-bordered w-full"
                 />
               </div>
 

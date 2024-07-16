@@ -135,7 +135,7 @@ const Articles = () => {
               ) : (
                 <tr>
                   <td colSpan="5" className="text-center">
-                    No articles found for the selected category.
+                    404! No articles found.
                   </td>
                 </tr>
               )}

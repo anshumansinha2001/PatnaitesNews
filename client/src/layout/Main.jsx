@@ -43,7 +43,7 @@ const Main = () => {
       {/* Navbar */}
       <Navbar />
 
-      <div className="w-full px-2 lg:px-10 2xl:px-10 min-h-screen pb-0 ">
+      <div className="w-full px-2 lg:px-10 2xl:px-10 min-h-screen lg:h-screen pb-0 ">
         <div className="w-full flex justify-between gap-2 pt-16 md:pt-24 h-full">
           {/* Left portion with profile card */}
           <div className="hidden min-w-60 lg:min-w-72 h-full xl:flex flex-col gap-6 overflow-y-auto">
