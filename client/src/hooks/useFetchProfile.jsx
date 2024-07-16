@@ -18,7 +18,7 @@ const useFetchProfile = () => {
         return data;
       } catch (error) {
         console.error(error);
-        setLoading(false);
+        // setLoading(false);
       }
     })();
   }, []);
