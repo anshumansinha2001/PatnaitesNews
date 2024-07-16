@@ -1,9 +1,13 @@
 const Article = require("../../models/article");
 
 module.exports.updateArticle = async (req, res) => {
+  const id = req.params.id;
+  const updatedData = req.body;
+  if (req.file) {
+    updatedData.img = `uploads/articles/${req.file.filename}`;
+  }
+
   try {
-    const id = req.params.id;
-    const updatedData = req.body;
     const result = await Article.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
