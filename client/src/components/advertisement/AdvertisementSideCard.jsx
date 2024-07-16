@@ -17,8 +17,12 @@ const AdvertisementSideCard = () => {
         <Spinner />
       ) : (
         <div className="flex gap-2 flex-col">
-          {sideAds.map((advertisement, index) => (
-            <Link to={advertisement?.link} key={index}>
+          {sideAds.map((advertisement) => (
+            <Link
+              to={advertisement.link.length ? advertisement.link : "#"}
+              key={advertisement._id}
+              target="_blank"
+            >
               <img
                 src={advertisement?.img}
                 alt="Failed to load image!"

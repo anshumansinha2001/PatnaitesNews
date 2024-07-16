@@ -17,8 +17,8 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
   // Set default form values when advertisment data is loaded
   React.useEffect(() => {
     if (advertisment) {
-      setValue("img", advertisment.img);
-      setValue("link", advertisment.link || "");
+      setValue("img", advertisment?.img);
+      setValue("link", advertisment?.link);
     }
   }, [advertisment, setValue]);
 
@@ -105,7 +105,7 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
                 </label>
                 <input
                   type="file"
-                  {...register("image", { required: true })}
+                  {...register("image")}
                   className="file-input w-full"
                 />
               </div>

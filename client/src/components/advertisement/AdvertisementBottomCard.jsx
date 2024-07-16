@@ -6,8 +6,12 @@ const AdvertisementBottomCard = () => {
 
   return (
     <div className="flex justify-center items-center gap-1 lg:gap-2 flex-wrap overflow-auto">
-      {bottomAds.map((advertisement, index) => (
-        <Link to={advertisement?.link} key={index}>
+      {bottomAds.map((advertisement) => (
+        <Link
+          to={advertisement.link.length ? advertisement.link : "#"}
+          key={advertisement._id}
+          target="_blank"
+        >
           <div className="relative">
             <img
               src={advertisement.img}
