@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import DrawerSide from "../components/admin/DrawerSide";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const AdminPanel = () => {
+  const location = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [location]);
   return (
     <div className="h-screen overflow-auto">
       <div className="flex flex-col lg:flex-row">
