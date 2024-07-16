@@ -11,7 +11,7 @@ const useFetchProfile = () => {
     (async () => {
       try {
         const response = await axios.get(`${API}/api/profile`);
-        const data = await response.data[0];
+        const data = await response.data;
         // console.log("useFetchProfile ::", data);
         setData(data);
         setLoading(false);

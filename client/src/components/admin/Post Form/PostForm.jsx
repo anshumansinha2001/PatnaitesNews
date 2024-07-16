@@ -56,13 +56,18 @@ const PostForm = ({ post }) => {
           });
 
       if (response) {
-        toast.success(post ? "Article Updated!" : "Article Created!");
+        if (post) {
+          toast.info("Article Updated!");
+        } else {
+          toast.success("Article Created!");
+        }
         navigate("/dashboard/articles");
       }
     } catch (err) {
+      toast.error("Something went wrong!");
       setError(
         err.response?.data?.message ||
-          "Something went wrong! It could be due to server issues or an invalid image format."
+          "It could be due to server issues or an invalid image format."
       );
     } finally {
       setLoading(false);

@@ -2,7 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 
 const useFetchBottomAds = () => {
   const API = import.meta.env.VITE_BACKEND_API_URL;
-  const { data: bottomAds = [], refetch } = useQuery({
+  const {
+    data: bottomAds = [],
+    isLoading: loading,
+    refetch,
+  } = useQuery({
     queryKey: ["bottomAds"],
     queryFn: async () => {
       try {
@@ -16,7 +20,7 @@ const useFetchBottomAds = () => {
     },
   });
 
-  return [bottomAds, refetch];
+  return [bottomAds, refetch, loading];
 };
 
 export default useFetchBottomAds;

@@ -3,8 +3,16 @@ const BottomAds = require("../../models/Advertisement/bottomAds");
 // GET All bottom Ads
 const getAllBottomAds = async (req, res) => {
   try {
+    // Fetch all bottom ads sorted by creation date
     const Ads = await BottomAds.find().sort({ createdAt: -1 });
-    res.status(200).json(Ads);
+
+    // Adjust ads to include full image URLs
+    const formattedAds = Ads.map((ad) => ({
+      ...ad.toObject(),
+      img: ad.img ? `${req.protocol}://${req.headers.host}/${ad.img}` : null,
+    }));
+
+    res.status(200).json(formattedAds);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve BottomAds" });
     console.error(error.message);
@@ -13,7 +21,8 @@ const getAllBottomAds = async (req, res) => {
 
 // CREATE ADS
 const createBottomAds = async (req, res) => {
-  const { img, link } = req.body;
+  const { link } = req.body;
+  const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
 
   try {
     const adExists = await BottomAds.findOne({ img });
@@ -36,10 +45,14 @@ const createBottomAds = async (req, res) => {
 
 // UPDATE ADS
 const updateBottomAds = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const updatedData = req.body;
+  const id = req.params.id;
+  const updatedData = req.body;
 
+  if (req.file) {
+    updatedData.img = `uploads/advertisements/${req.file.filename}`;
+  }
+
+  try {
     const result = await BottomAds.findByIdAndUpdate(id, updatedData, {
       new: true,
     });

@@ -3,17 +3,21 @@ const path = require("path");
 
 // Set storage engine
 const storage = multer.diskStorage({
-  destination: "./uploads/",
+  destination: "./uploads/advertisements/",
   filename: function (req, file, cb) {
     cb(
       null,
-      "logo" + "-" + Date.now() + "_" + file.originalname.replace(" ", "-")
+      file.fieldname +
+        "-" +
+        Date.now() +
+        "_" +
+        file.originalname.replace(" ", "-")
     );
   },
 });
 
 // Initialize upload
-const uploadProfileLogo = multer({
+const uploadAdvertisementImg = multer({
   storage: storage,
   limits: { fileSize: 1000000 }, // Limit file size to 1MB
   fileFilter: function (req, file, cb) {
@@ -30,4 +34,4 @@ const uploadProfileLogo = multer({
   },
 }).single("image"); // 'image' is the field name for the image file in the form
 
-module.exports = uploadProfileLogo;
+module.exports = uploadAdvertisementImg;

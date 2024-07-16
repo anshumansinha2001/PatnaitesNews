@@ -10,6 +10,8 @@ const Profile = () => {
   const [data, loading, setLoading] = useFetchProfile();
   const { register, handleSubmit, setValue } = useForm();
 
+  console.log("PROFILE", data);
+
   const navigate = useNavigate();
 
   const [error, setError] = useState(false);
@@ -18,7 +20,7 @@ const Profile = () => {
   // Set default form values when data is loaded
   React.useEffect(() => {
     if (data) {
-      setValue("logo", data.logo);
+      setValue("logo", data?.logo);
       setValue("mail", data.mail);
       setValue("portfolio", data.portfolio);
       setValue("fbFollowers", data.fbFollowers);
@@ -28,18 +30,40 @@ const Profile = () => {
   }, [data, setValue]);
 
   const API = import.meta.env.VITE_BACKEND_API_URL;
-  const onSubmit = async (formData) => {
+
+  const onSubmit = async (submitedData) => {
     setLoading(true);
+    setError(false);
+
     try {
-      const response = await axios.put(`${API}/api/profile`, formData);
+      const formData = new FormData();
+      for (const key in submitedData) {
+        formData.append(key, submitedData[key]);
+      }
+
+      // Check if a new image is uploaded
+      if (submitedData.image && submitedData.image.length > 0) {
+        formData.append("image", submitedData.image[0]);
+      }
+
+      const response = await axios.put(`${API}/api/profile`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (response) {
         toast.info("Profile Updated!");
-        navigate(`/dashboard`);
+        navigate("/dashboard");
       }
     } catch (error) {
       console.error(error);
       setError(true);
-      setErrorMsg(error.response?.data?.message || "Something went wrong!");
+      toast.error("Something went wrong!");
+      setErrorMsg(
+        error.response?.data?.message ||
+          "It could be due to server issues or an invalid image format."
+      );
     } finally {
       setLoading(false);
     }
@@ -53,7 +77,7 @@ const Profile = () => {
         <div className="w-full md:w-[870px] px-4 mx-auto rounded-md shadow-md p-2">
           <div className="flex items-center justify-between">
             <h2 className="flex gap-1 text-3xl md:text-4xl font-serif font-semibold">
-              {data.name}
+              {data?.name}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-6"
@@ -71,7 +95,7 @@ const Profile = () => {
             </h2>
             <img
               className="rounded-full w-20 md:w-28"
-              src={data.logo}
+              src={data?.logo}
               alt="Profile Logo"
             />
           </div>
@@ -83,15 +107,14 @@ const Profile = () => {
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-            <div className="form-control w-full">
+            <div className="form-control w-full max-w-xs">
               <label className="label">
-                <span className="label-text">Logo URL</span>
+                <span className="label-text">Logo</span>
               </label>
               <input
-                type="text"
-                {...register("logo", { required: true })}
-                placeholder="Enter image URL"
-                className="input input-bordered w-full"
+                type="file"
+                {...register("image")}
+                className="file-input w-full"
               />
             </div>
 

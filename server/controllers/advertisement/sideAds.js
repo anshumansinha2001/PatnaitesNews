@@ -3,8 +3,16 @@ const SideAds = require("../../models/Advertisement/sideAds");
 // GET All Side Ads
 const getAllSideAds = async (req, res) => {
   try {
+    // Fetch all side ads sorted by creation date
     const Ads = await SideAds.find().sort({ createdAt: -1 });
-    res.status(200).json(Ads);
+
+    // Adjust ads to include full image URLs
+    const formattedAds = Ads.map((ad) => ({
+      ...ad.toObject(),
+      img: ad.img ? `${req.protocol}://${req.headers.host}/${ad.img}` : null,
+    }));
+
+    res.status(200).json(formattedAds);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve SideAds" });
     console.error(error.message);
@@ -13,7 +21,8 @@ const getAllSideAds = async (req, res) => {
 
 // CREATE ADS
 const createSideAds = async (req, res) => {
-  const { img, link } = req.body;
+  const { link } = req.body;
+  const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
 
   try {
     const adExists = await SideAds.findOne({ img });
@@ -36,10 +45,14 @@ const createSideAds = async (req, res) => {
 
 // UPDATE ADS
 const updateSideAds = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const updatedData = req.body;
+  const id = req.params.id;
+  const updatedData = req.body;
 
+  if (req.file) {
+    updatedData.img = `uploads/advertisements/${req.file.filename}`;
+  }
+
+  try {
     const result = await SideAds.findByIdAndUpdate(id, updatedData, {
       new: true,
     });

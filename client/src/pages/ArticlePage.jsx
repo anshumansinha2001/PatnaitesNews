@@ -61,7 +61,7 @@ const ArticlePage = () => {
   );
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="max-w-3xl mx-auto p-0">
       <Helmet>
         <title>
           {article.title ? `${article.title} | Patnaites` : "Patnaites News"}
@@ -120,7 +120,7 @@ const ArticlePage = () => {
         alt="Failed to load image!"
         className={`w-full ${
           !article.img ? "h-32 md:h-48" : "h-[15rem] md:h-[20rem] lg:h-[28rem]"
-        } object-cove rounded-lg shadow-md mb-6`}
+        } object-cover rounded-lg shadow-md mb-6`}
       />
       <div className="card-actions justify-between mb-4 font-semibold text-sm md:text-lg">
         <span>{moment(article.createdAt ?? "2023-05-25").fromNow()}</span>

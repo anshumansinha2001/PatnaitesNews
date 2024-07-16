@@ -3,8 +3,16 @@ const InBetweenAds = require("../../models/Advertisement/inBetweenAds");
 // GET All between Ads
 const getAllInBetweenAds = async (req, res) => {
   try {
+    // Fetch all between ads sorted by creation date
     const Ads = await InBetweenAds.find().sort({ createdAt: -1 });
-    res.status(200).json(Ads);
+
+    // Adjust ads to include full image URLs
+    const formattedAds = Ads.map((ad) => ({
+      ...ad.toObject(),
+      img: ad.img ? `${req.protocol}://${req.headers.host}/${ad.img}` : null,
+    }));
+
+    res.status(200).json(formattedAds);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve InBetweenAds" });
     console.error(error.message);
@@ -13,7 +21,8 @@ const getAllInBetweenAds = async (req, res) => {
 
 // CREATE ADS
 const createInBetweenAds = async (req, res) => {
-  const { img, link } = req.body;
+  const { link } = req.body;
+  const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
 
   try {
     const adExists = await InBetweenAds.findOne({ img });
@@ -36,10 +45,14 @@ const createInBetweenAds = async (req, res) => {
 
 // UPDATE ADS
 const updateInBetweenAds = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const updatedData = req.body;
+  const id = req.params.id;
+  const updatedData = req.body;
 
+  if (req.file) {
+    updatedData.img = `uploads/advertisements/${req.file.filename}`;
+  }
+
+  try {
     const result = await InBetweenAds.findByIdAndUpdate(id, updatedData, {
       new: true,
     });

@@ -25,25 +25,36 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
   const API = import.meta.env.VITE_BACKEND_API_URL;
 
   // Form submission handler
-  const onSubmit = async (formData) => {
+  const onSubmit = async (data) => {
     setLoading(true);
     setError(false);
 
     try {
-      // If advertisment exists, update it
-      if (advertisment) {
-        const response = await axios.put(
-          `${API}/api/${updateAPI}/${advertisment._id}`,
-          formData
-        );
-        if (response) {
+      const formData = new FormData();
+      for (const key in data) {
+        formData.append(key, data[key]);
+      }
+      if (data.image.length > 0) {
+        formData.append("image", data.image[0]);
+      }
+
+      const response = advertisment
+        ? axios.put(`${API}/api/${updateAPI}/${advertisment._id}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+        : await axios.post(`${API}/api/${createAPI}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
+
+      if (response) {
+        if (advertisment) {
           toast.info("Advertisement Updated!");
           navigate(`/dashboard/${updateAPI}`);
-        }
-      } else {
-        // Else, create a new advertisement
-        const response = await axios.post(`${API}/api/${createAPI}`, formData);
-        if (response) {
+        } else {
           toast.success("Advertisement Created!");
           navigate(`/dashboard/${createAPI}`);
         }
@@ -51,7 +62,10 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
     } catch (error) {
       console.error(error);
       setError(true);
-      setErrorMsg(error.response?.data?.message || "Something went wrong!");
+      setErrorMsg(
+        error.response?.data?.message ||
+          "Something went wrong! It could be due to server issues or an invalid image format."
+      );
     } finally {
       setLoading(false);
     }
@@ -84,21 +98,8 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
 
           <div className="mt-2">
             <form onSubmit={handleSubmit(onSubmit)}>
-              {/* Image URL input */}
-              <div className="form-control w-full">
-                <label className="label">
-                  <span className="label-text">Image URL*</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("img", { required: true })}
-                  placeholder="Type image URL"
-                  className="input input-bordered w-full"
-                />
-              </div>
-
-              {/* Uncomment this if you need file upload functionality with Multer */}
-              {/* <div className="form-control w-full max-w-xs my-6">
+              {/* Image input */}
+              <div className="form-control w-full max-w-xs my-6">
                 <label className="label">
                   <span className="label-text">Image*</span>
                 </label>
@@ -107,7 +108,7 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
                   {...register("image", { required: true })}
                   className="file-input w-full"
                 />
-              </div> */}
+              </div>
 
               {/* Link input */}
               <div className="form-control w-full">

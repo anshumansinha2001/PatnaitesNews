@@ -1,4 +1,6 @@
 const express = require("express");
+const uploadAdvertisementImg = require("../middlewares/multer/advertisementMulter");
+
 const router = express.Router();
 
 const {
@@ -24,20 +26,20 @@ const {
 
 // FOR SIDE ADS
 router.get("/side-ads", getAllSideAds);
-router.post("/side-ads", createSideAds);
-router.put("/side-ads/:id", updateSideAds);
+router.post("/side-ads", uploadAdvertisementImg, createSideAds);
+router.put("/side-ads/:id", uploadAdvertisementImg, updateSideAds);
 router.delete("/side-ads/:id", deleteSideAds);
 
 // FOR BETWEEN ADS
 router.get("/between-ads", getAllInBetweenAds);
-router.post("/between-ads", createInBetweenAds);
-router.put("/between-ads/:id", updateInBetweenAds);
+router.post("/between-ads", uploadAdvertisementImg, createInBetweenAds);
+router.put("/between-ads/:id", uploadAdvertisementImg, updateInBetweenAds);
 router.delete("/between-ads/:id", deleteInBetweenAds);
 
 // FOR BOTTOM ADS
 router.get("/bottom-ads", getAllBottomAds);
-router.post("/bottom-ads", createBottomAds);
-router.put("/bottom-ads/:id", updateBottomAds);
+router.post("/bottom-ads", uploadAdvertisementImg, createBottomAds);
+router.put("/bottom-ads/:id", uploadAdvertisementImg, updateBottomAds);
 router.delete("/bottom-ads/:id", deleteBottomAds);
 
 module.exports = router;

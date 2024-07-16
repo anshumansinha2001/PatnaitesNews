@@ -5,7 +5,14 @@ const path = require("path");
 const storage = multer.diskStorage({
   destination: "./uploads/articles/",
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + "_" + file.originalname);
+    cb(
+      null,
+      file.fieldname +
+        "-" +
+        Date.now() +
+        "_" +
+        file.originalname.replace(" ", "-")
+    );
   },
 });
 

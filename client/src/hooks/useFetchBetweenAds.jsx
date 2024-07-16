@@ -2,7 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 
 const useFetchBetweenAds = () => {
   const API = import.meta.env.VITE_BACKEND_API_URL;
-  const { data: betweenAds = [], refetch } = useQuery({
+  const {
+    data: betweenAds = [],
+    isLoading: loading,
+    refetch,
+  } = useQuery({
     queryKey: ["betweenAds"],
     queryFn: async () => {
       try {
@@ -16,7 +20,7 @@ const useFetchBetweenAds = () => {
     },
   });
 
-  return [betweenAds, refetch];
+  return [betweenAds, refetch, loading];
 };
 
 export default useFetchBetweenAds;
