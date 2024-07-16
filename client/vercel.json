@@ -1,0 +1,136 @@
+{
+    "rewrites": [
+        {
+            "source": "/",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/health",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/health/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/sports",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/sports/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/politics",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/politics/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/weather",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/weather/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/business",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/business/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/education",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/education/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/entertainment",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/entertainment/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/international",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/international/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/logout",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/profile",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/articles",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/create-article",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/update-article/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/side-ads",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/create-side-ad",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/update-side-ad/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/between-ads",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/create-between-ad",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/update-between-ad/:id",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/bottom-ads",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/create-bottom-ad",
+            "destination": "/index.html"
+        },
+        {
+            "source": "/dashboard/update-bottom-ad/:id",
+            "destination": "/index.html"
+        }
+    ]
+}
