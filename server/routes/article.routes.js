@@ -1,5 +1,6 @@
 const express = require("express");
-const uploadArticleImg = require("../middlewares/multer/articleMulter");
+const uploadImg = require("../middlewares/multer/multer");
+const convertArticleToWebp = require("../middlewares/sharp/articleSharp");
 
 const router = express.Router();
 
@@ -9,8 +10,8 @@ const { deleteArticle } = require("../controllers/article/deleteArticle");
 const { updateArticle } = require("../controllers/article/updateArticle");
 
 router.get("/article", getAllArticles);
-router.post("/article", uploadArticleImg, createArticle);
-router.put("/article/:id", uploadArticleImg, updateArticle);
+router.post("/article", uploadImg, convertArticleToWebp, createArticle);
+router.put("/article/:id", uploadImg, convertArticleToWebp, updateArticle);
 router.delete("/article/:id", deleteArticle);
 
 module.exports = router;

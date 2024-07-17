@@ -1,5 +1,6 @@
 const express = require("express");
-const uploadProfileLogo = require("../middlewares/multer/profileLogoMulter");
+const uploadImg = require("../middlewares/multer/multer");
+const convertLogoImgToWebp = require("../middlewares/sharp/profileLogoSharp");
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ router.get("/profile", async (req, res) => {
 });
 
 // UPDATE PATNAITES PROFILE DETAILS
-router.put("/profile", uploadProfileLogo, async (req, res) => {
+router.put("/profile", uploadImg, convertLogoImgToWebp, async (req, res) => {
   const { mail, portfolio, fbFollowers, instaFollowers, ytFollowers } =
     req.body;
   let logo;
@@ -102,7 +103,7 @@ router.delete("/profile/delete-logo", async (req, res) => {
 });
 
 // CREATE PATNAITES PROFILE DETAILS [OPTIONAL]
-router.post("/profile", uploadProfileLogo, async (req, res) => {
+router.post("/profile", uploadImg, convertLogoImgToWebp, async (req, res) => {
   const { logo, mail, portfolio, fbFollowers, instaFollowers, ytFollowers } =
     req.body;
 

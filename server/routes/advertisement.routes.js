@@ -1,5 +1,6 @@
 const express = require("express");
-const uploadAdvertisementImg = require("../middlewares/multer/advertisementMulter");
+const uploadImg = require("../middlewares/multer/multer");
+const convertAdvertisementToWebp = require("../middlewares/sharp/advertisementSharp");
 
 const router = express.Router();
 
@@ -26,20 +27,45 @@ const {
 
 // FOR SIDE ADS
 router.get("/side-ads", getAllSideAds);
-router.post("/side-ads", uploadAdvertisementImg, createSideAds);
-router.put("/side-ads/:id", uploadAdvertisementImg, updateSideAds);
+router.post("/side-ads", uploadImg, convertAdvertisementToWebp, createSideAds);
+router.put(
+  "/side-ads/:id",
+  uploadImg,
+  convertAdvertisementToWebp,
+  updateSideAds
+);
 router.delete("/side-ads/:id", deleteSideAds);
 
 // FOR BETWEEN ADS
 router.get("/between-ads", getAllInBetweenAds);
-router.post("/between-ads", uploadAdvertisementImg, createInBetweenAds);
-router.put("/between-ads/:id", uploadAdvertisementImg, updateInBetweenAds);
+router.post(
+  "/between-ads",
+  uploadImg,
+  convertAdvertisementToWebp,
+  createInBetweenAds
+);
+router.put(
+  "/between-ads/:id",
+  uploadImg,
+  convertAdvertisementToWebp,
+  updateInBetweenAds
+);
 router.delete("/between-ads/:id", deleteInBetweenAds);
 
 // FOR BOTTOM ADS
 router.get("/bottom-ads", getAllBottomAds);
-router.post("/bottom-ads", uploadAdvertisementImg, createBottomAds);
-router.put("/bottom-ads/:id", uploadAdvertisementImg, updateBottomAds);
+router.post(
+  "/bottom-ads",
+  uploadImg,
+  convertAdvertisementToWebp,
+  createBottomAds
+);
+router.put(
+  "/bottom-ads/:id",
+  uploadImg,
+  convertAdvertisementToWebp,
+  updateBottomAds
+);
 router.delete("/bottom-ads/:id", deleteBottomAds);
 
 module.exports = router;

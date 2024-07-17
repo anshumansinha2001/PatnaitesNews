@@ -1,23 +1,11 @@
 const multer = require("multer");
 const path = require("path");
 
-// Set storage engine
-const storage = multer.diskStorage({
-  destination: "./uploads/advertisements/",
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname +
-        "-" +
-        Date.now() +
-        "_" +
-        file.originalname.replace(" ", "-")
-    );
-  },
-});
+// Set storage engine to store files temporarily in memory
+const storage = multer.memoryStorage();
 
-// Initialize upload
-const uploadAdvertisementImg = multer({
+// Initialize upload with multer
+uploadAdvertisementImg = multer({
   storage: storage,
   limits: { fileSize: 1000000 }, // Limit file size to 1MB
   fileFilter: function (req, file, cb) {
