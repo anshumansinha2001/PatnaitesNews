@@ -122,7 +122,7 @@ const Profile = () => {
               </svg>
             </h2>
             <img
-              className="rounded-full w-20 md:w-28"
+              className="rounded-full w-20 h-20 md:h-28 object-cover md:w-28"
               src={data?.logo}
               alt="Profile Logo"
             />

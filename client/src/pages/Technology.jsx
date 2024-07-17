@@ -2,22 +2,21 @@ import React, { useEffect } from "react";
 import ArticleCard from "../components/ArticleCard";
 import { useOutletContext } from "react-router-dom";
 
-const Business = () => {
+const Technology = () => {
   const { articles } = useOutletContext();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
   return (
     <>
       {/* CENTER */}
       <p className="text-center font-extrabold text-lg md:text-2xl tracking-widest uppercase ">
-        BUSINESS
+        Technology
       </p>
       <div className="flex justify-around flex-wrap gap-1 md:gap-4 lg:gap-6 px-0 md:px-3  py-2 md:py-4">
         {articles.map((article, index) =>
-          article.category === "Business" ? (
+          article.category === "Technology" ? (
             <ArticleCard
               key={index}
               id={article._id}
@@ -34,4 +33,4 @@ const Business = () => {
   );
 };
 
-export default Business;
+export default Technology;

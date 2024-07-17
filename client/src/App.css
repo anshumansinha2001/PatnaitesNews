@@ -1,0 +1,22 @@
+:root,
+[data-theme="dark"] {
+    color: white !important;
+}
+
+/* Hide scrollbar for elements with the no-scrollbar class */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+
+* {
+    scrollbar-width: thin;
+    /* Thin scrollbar width */
+}

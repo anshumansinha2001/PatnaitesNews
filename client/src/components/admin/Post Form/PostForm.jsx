@@ -149,12 +149,16 @@ const PostForm = ({ post }) => {
                   >
                     <option disabled>Select a category</option>
                     <option>Politics</option>
-                    <option>Weather</option>
-                    <option>Sports</option>
-                    <option>Health</option>
+                    <option>Cities</option>
                     <option>Business</option>
                     <option>Education</option>
+                    <option>Technology</option>
+                    <option>Lifestyle</option>
+                    <option>Travel</option>
+                    <option>Health</option>
+                    <option>Weather</option>
                     <option>Entertainment</option>
+                    <option>Sports</option>
                     <option>International</option>
                   </select>
                 </div>

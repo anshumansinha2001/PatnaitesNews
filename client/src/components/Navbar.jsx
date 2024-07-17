@@ -67,34 +67,10 @@ const Navbar = () => {
       </li>
       <li onClick={() => setIsDropdownOpen(true)}>
         <Link
-          to="/weather"
+          to="/cities"
           className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
         >
-          Weather
-        </Link>
-      </li>
-      <li onClick={() => setIsDropdownOpen(true)}>
-        <Link
-          to="/sports"
-          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
-        >
-          Sports
-        </Link>
-      </li>
-      <li onClick={() => setIsDropdownOpen(true)}>
-        <Link
-          to="/health"
-          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
-        >
-          Health
-        </Link>
-      </li>
-      <li onClick={() => setIsDropdownOpen(true)}>
-        <Link
-          to="/business"
-          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
-        >
-          Business
+          Cities
         </Link>
       </li>
       <li onClick={() => setIsDropdownOpen(true)}>
@@ -107,10 +83,68 @@ const Navbar = () => {
       </li>
       <li onClick={() => setIsDropdownOpen(true)}>
         <Link
+          to="/business"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Business
+        </Link>
+      </li>
+
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
+          to="/lifestyle"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Lifestyle
+        </Link>
+      </li>
+
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
+          to="/sports"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Sports
+        </Link>
+      </li>
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
+          to="/travel"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Travel
+        </Link>
+      </li>
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
+          to="/technology"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Technology
+        </Link>
+      </li>
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
+          to="/weather"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Weather
+        </Link>
+      </li>
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
           to="/education"
           className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
         >
           Education
+        </Link>
+      </li>
+      <li onClick={() => setIsDropdownOpen(true)}>
+        <Link
+          to="/health"
+          className="hover:text-blue-400 mx-1 my-1 md:my-0 text-sm md:text-[1.1rem]"
+        >
+          Health
         </Link>
       </li>
       <li onClick={() => setIsDropdownOpen(true)}>
@@ -121,6 +155,7 @@ const Navbar = () => {
           Entertainment
         </Link>
       </li>
+
       <li onClick={() => setIsDropdownOpen(true)}>
         <Link
           to="/international"
@@ -246,7 +281,9 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{navItems}</ul>
+          <ul className="menu menu-horizonta px-1 max-w-[56rem] max-h-16 overflow-x-auto p-0">
+            {navItems}
+          </ul>
         </div>
 
         <div className="navbar-end">

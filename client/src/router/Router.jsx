@@ -33,29 +33,52 @@ import CreateSideAd from "../pages/admin/create/CreateSideAd";
 import CreateArticle from "../pages/admin/create/CreateArticle";
 import CreateBetweenAd from "../pages/admin/create/CreateBetweenAd";
 import CreateBottomAd from "../pages/admin/create/CreateBottomAd";
+import Cities from "../pages/Cities";
+import Technology from "../pages/Technology";
+import Lifestyle from "../pages/Lifestyle";
+import Travel from "../pages/Travel";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Main />}>
         <Route index element={<Home />} />
+
+        <Route path="cities" element={<Cities />} />
+        <Route path="cities/article/:id" element={<ArticlePage />} />
+
         <Route path="health" element={<Health />} />
         <Route path="health/article/:id" element={<ArticlePage />} />
+
         <Route path="sports" element={<Sports />} />
         <Route path="sports/article/:id" element={<ArticlePage />} />
+
         <Route path="politics" element={<Politics />} />
         <Route path="politics/article/:id" element={<ArticlePage />} />
+
         <Route path="weather" element={<Weather />} />
         <Route path="weather/article/:id" element={<ArticlePage />} />
+
         <Route path="business" element={<Business />} />
         <Route path="business/article/:id" element={<ArticlePage />} />
+
         <Route path="education" element={<Education />} />
         <Route path="education/article/:id" element={<ArticlePage />} />
+
         <Route path="entertainment" element={<Entertainment />} />
         <Route path="entertainment/article/:id" element={<ArticlePage />} />
+
         <Route path="international" element={<International />} />
         <Route path="international/article/:id" element={<ArticlePage />} />
-        <Route path="article/:id" element={<ArticlePage />} />
+
+        <Route path="technology" element={<Technology />} />
+        <Route path="technology/article/:id" element={<ArticlePage />} />
+
+        <Route path="lifestyle" element={<Lifestyle />} />
+        <Route path="lifestyle/article/:id" element={<ArticlePage />} />
+
+        <Route path="travel" element={<Travel />} />
+        <Route path="travel/article/:id" element={<ArticlePage />} />
       </Route>
 
       {/* ADMIN Routes */}

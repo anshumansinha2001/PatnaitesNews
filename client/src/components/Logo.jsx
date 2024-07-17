@@ -8,7 +8,7 @@ const Logo = () => {
     <img
       src={data.logo || defaultLogo}
       alt="logo"
-      className="w-8 md:w-14 object-cover rounded-full"
+      className="w-8 h-8 md:h-14 md:w-14 object-cover rounded-full"
     />
   );
 };
