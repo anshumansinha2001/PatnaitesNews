@@ -17,7 +17,7 @@ const uploadProfileLogo = multer({
   storage: storage,
   limits: { fileSize: 1000000 }, // Limit file size to 1MB
   fileFilter: function (req, file, cb) {
-    const filetypes = /jpeg|jpg|png|gif/;
+    const filetypes = /jpeg|jpg|png|gif|webp/;
     const extname = filetypes.test(
       path.extname(file.originalname).toLowerCase()
     );

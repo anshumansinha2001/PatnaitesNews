@@ -16,9 +16,9 @@ const Home = () => {
         Latest News
       </p>
       <div className="flex justify-around flex-wrap gap-1 md:gap-4 lg:gap-6 px-0 md:px-3 py-2 md:py-4">
-        {articles.map((article, index) => (
+        {articles.map((article) => (
           <ArticleCard
-            key={index}
+            key={article._id}
             id={article._id}
             img={article.img}
             title={article.title}
