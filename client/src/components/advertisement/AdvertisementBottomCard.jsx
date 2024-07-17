@@ -16,7 +16,11 @@ const AdvertisementBottomCard = () => {
               <img
                 src={advertisement.img}
                 alt="Failed to load image!"
-                className="xs:h-20 xs:w-[10.2rem] sm:h-24 sm:w-[11.3rem] md:h-36 md:w-[15.4rem] lg:h-44 lg:w-[18.8rem] xl:h-52 xl:w-[22rem]"
+                className={`${
+                  bottomAds.length === 1
+                    ? "w-96 h-full"
+                    : "xs:h-20 xs:w-[10.2rem] sm:h-24 sm:w-[11.3rem] md:h-36 md:w-[15.4rem] lg:h-44 lg:w-[18.8rem] xl:h-52 xl:w-[22rem]"
+                }`}
               />
               <p className="absolute top-1 left-1 text-sm text-gray-300 z-10">
                 • Ads
