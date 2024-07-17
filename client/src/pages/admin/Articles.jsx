@@ -21,7 +21,7 @@ const Articles = () => {
     refetch();
   }, [category, refetch]);
 
-  const API = import.meta.env.VITE_BACKEND_API_URL;
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
   // Handle Delete Items
   const handleDeleteItem = async (article) => {
@@ -30,7 +30,7 @@ const Articles = () => {
         `Do you want to Delete ${article.title} ?`
       );
       if (userChoice) {
-        await axios.delete(`${API}/api/article/${article._id}`);
+        await axios.delete(`${API_URL}/api/article/${article._id}`);
         refetch();
         toast.success("Article deleted!");
       } else {

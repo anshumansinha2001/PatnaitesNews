@@ -5,7 +5,7 @@ const AdvertisementInBetweenCard = ({ img, link }) => {
   return (
     <div className="flex justify-center items-center relative">
       {img === "" ? null : (
-        <Link to={link ? link : "#"} target="_blank">
+        <Link to={link ? link : "#"}>
           <img
             src={img}
             alt="Failed to load image!"

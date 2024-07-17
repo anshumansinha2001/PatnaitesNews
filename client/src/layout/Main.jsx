@@ -26,8 +26,8 @@ const Main = () => {
 
   // Effect to fetch visitor count on component mount
   useEffect(() => {
-    const API = import.meta.env.VITE_BACKEND_API_URL;
-    fetch(`${API}/api/count/visitors`)
+    const API_URL = import.meta.env.VITE_BACKEND_API_URL;
+    fetch(`${API_URL}/api/count/visitors`)
       .then((response) => response.json())
       .catch((error) => console.error("Error fetching visitor count:", error));
   }, []);

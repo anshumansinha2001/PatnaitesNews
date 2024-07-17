@@ -19,6 +19,6 @@ module.exports.updateArticle = async (req, res) => {
     }
   } catch (error) {
     res.status(500).send({ message: "Error updating item", error });
-    console.error(error);
+    console.log(error);
   }
 };

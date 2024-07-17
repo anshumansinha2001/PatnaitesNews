@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { darkTheme, lightTheme } from "../redux/themeSlice";
+import { MdHomeRepairService } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa";
+import { FaUserLock } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isSticky, setSticky] = useState(false);
@@ -143,13 +146,24 @@ const Navbar = () => {
 
           <ul className="space-y-2 md:space-y-4">
             <li>
-              <Link to="/">Services</Link>
+              <Link to="/dashboard">
+                <FaUserLock />
+                Dashboard
+              </Link>
             </li>
+
             <li>
-              <Link to="/dashboard">Dashboard</Link>
+              <Link to="https://patnaites.vercel.app/#services" target="_blank">
+                <MdHomeRepairService />
+                Services
+              </Link>
             </li>
+
             <li>
-              <Link to="/">ContactUs</Link>
+              <Link to="https://wa.link/r7efdb" target="_blank">
+                <FaWhatsapp />
+                Text Us
+              </Link>
             </li>
           </ul>
         </details>

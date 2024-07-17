@@ -7,49 +7,58 @@ import { toast } from "react-toastify";
 import Spinner from "../../Loading/Spinner";
 
 const PostForm = ({ post }) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const { register, handleSubmit, control, setValue } = useForm({
-    defaultValues: {
-      id: post?._id,
-      title: post?.title || "",
-      category: post?.category || "",
-      author: post?.author || "",
-      isBreakingNews: post?.isBreakingNews || false,
-      content: post?.content || "",
-      // img: post?.img,
-    },
-  });
+  const { register, handleSubmit, control, setValue } = useForm();
 
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const API = import.meta.env.VITE_BACKEND_API_URL;
+  // Set default form values when articles data is loaded
+  useEffect(() => {
+    window.scrollTo(0, 0);
 
+    if (post) {
+      setValue("title", post?.title || "");
+      setValue("category", post?.category || "");
+      setValue("author", post?.author);
+      setValue("isBreakingNews", post?.isBreakingNews || false);
+      setValue("content", post?.content || "");
+    }
+  }, [post, setValue]);
+
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
+
+  // Form submission handler
   const onSubmit = async (data) => {
     setLoading(true);
     setError(null);
 
     try {
+      // Create a new FormData object to store form data
       const formData = new FormData();
+
+      // Loop through each key in the 'data' object
       for (const key in data) {
+        // Append the value associated with each key to the FormData object
+        // 'key' is the name of the field, and 'data[key]' is the value
         formData.append(key, data[key]);
       }
-      if (data.image.length > 0) {
+
+      // Check if the 'image' key exists in the 'data' object and if it has any files (length > 0)
+      if (data.image && data.image.length > 0) {
+        // Append the first file in the 'image' array to the FormData object
+        // The 'image' field name will be used to reference the file on the server
         formData.append("image", data.image[0]);
       }
 
       const response = post
-        ? await axios.put(`${API}/api/article/${post._id}`, formData, {
+        ? await axios.put(`${API_URL}/api/article/${post._id}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           })
-        : await axios.post(`${API}/api/article`, formData, {
+        : await axios.post(`${API_URL}/api/article`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -63,10 +72,11 @@ const PostForm = ({ post }) => {
         }
         navigate("/dashboard/articles");
       }
-    } catch (err) {
+    } catch (error) {
+      console.log(error);
       toast.error("Something went wrong!");
       setError(
-        err.response?.data?.message ||
+        error.response?.data?.message ||
           "It could be due to server issues or an invalid image format."
       );
     } finally {
@@ -100,7 +110,7 @@ const PostForm = ({ post }) => {
           <div className="mt-2">
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="space-y-2 md: space-y-4"
+              className="space-y-2 md:space-y-4"
             >
               {/* Title */}
               <div className="form-control w-full">

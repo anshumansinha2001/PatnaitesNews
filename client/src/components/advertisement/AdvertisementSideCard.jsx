@@ -21,7 +21,6 @@ const AdvertisementSideCard = () => {
             <Link
               to={advertisement.link.length ? advertisement.link : "#"}
               key={advertisement._id}
-              target="_blank"
             >
               <img
                 src={advertisement?.img}

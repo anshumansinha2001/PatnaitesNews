@@ -17,13 +17,13 @@ const Dashboard = () => {
   const [visitorCount, setVisitorCount] = useState(0);
   const location = useLocation();
 
-  const API = import.meta.env.VITE_BACKEND_API_URL;
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
   useEffect(() => {
     const fetchVisitorCount = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`${API}/api/show/visitors`);
+        const response = await fetch(`${API_URL}/api/show/visitors`);
         const data = await response.json();
         setVisitorCount(data.count);
       } catch (error) {

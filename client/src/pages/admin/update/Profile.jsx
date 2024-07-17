@@ -10,12 +10,11 @@ const Profile = () => {
   const [data, loading, setLoading] = useFetchProfile();
   const { register, handleSubmit, setValue } = useForm();
 
-  console.log("PROFILE", data);
+  // console.log("PROFILE", data);
 
   const navigate = useNavigate();
 
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [error, setError] = useState(null);
 
   // Set default form values when data is loaded
   React.useEffect(() => {
@@ -29,11 +28,11 @@ const Profile = () => {
     }
   }, [data, setValue]);
 
-  const API = import.meta.env.VITE_BACKEND_API_URL;
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
   const onSubmit = async (submitedData) => {
     setLoading(true);
-    setError(false);
+    setError(null);
 
     try {
       const formData = new FormData();
@@ -46,7 +45,7 @@ const Profile = () => {
         formData.append("image", submitedData.image[0]);
       }
 
-      const response = await axios.put(`${API}/api/profile`, formData, {
+      const response = await axios.put(`${API_URL}/api/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -57,13 +56,42 @@ const Profile = () => {
         navigate("/dashboard");
       }
     } catch (error) {
-      console.error(error);
-      setError(true);
+      console.lof(error);
       toast.error("Something went wrong!");
-      setErrorMsg(
+      setError(
         error.response?.data?.message ||
           "It could be due to server issues or an invalid image format."
       );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handling logo delete
+  const handleDeleteLogo = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      let userChoice = window.confirm(
+        `Do you want to delete this logo and set the Default logo?`
+      );
+      if (userChoice) {
+        const response = await axios.delete(
+          `${API_URL}/api/profile/delete-logo`
+        );
+
+        if (response) {
+          toast.success("Logo Deleted!");
+          navigate("/dashboard");
+        }
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+      setError(error.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -102,20 +130,30 @@ const Profile = () => {
 
           {error && (
             <p className="text-white text-center text-base font-thin italic bg-red-800 my-2">
-              Error: {errorMsg}
+              Error: {error}
             </p>
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-            <div className="form-control w-full max-w-xs">
-              <label className="label">
-                <span className="label-text">Logo</span>
-              </label>
-              <input
-                type="file"
-                {...register("image")}
-                className="file-input w-full"
-              />
+            {/* Logo section */}
+            <div className="flex justify-between items-end">
+              <div className="form-control w-full max-w-xs">
+                <label className="label">
+                  <span className="label-text">Logo</span>
+                </label>
+                <input
+                  type="file"
+                  {...register("image")}
+                  className="file-input w-full"
+                />
+              </div>
+
+              <div
+                className="btn btn-sm bg-red-700 text-white"
+                onClick={handleDeleteLogo}
+              >
+                Delete logo
+              </div>
             </div>
 
             <div className="form-control w-full">

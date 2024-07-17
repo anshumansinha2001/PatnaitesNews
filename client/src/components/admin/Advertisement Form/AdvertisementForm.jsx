@@ -11,40 +11,45 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [error, setError] = useState(null);
 
   // Set default form values when advertisment data is loaded
   React.useEffect(() => {
     if (advertisment) {
-      setValue("img", advertisment?.img);
+      setValue("image", advertisment?.img);
       setValue("link", advertisment?.link);
     }
   }, [advertisment, setValue]);
 
-  const API = import.meta.env.VITE_BACKEND_API_URL;
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
   // Form submission handler
   const onSubmit = async (data) => {
     setLoading(true);
-    setError(false);
+    setError(null);
 
     try {
       const formData = new FormData();
       for (const key in data) {
         formData.append(key, data[key]);
       }
-      if (data.image.length > 0) {
+
+      // Check if a new image is uploaded
+      if (data.image && data.image.length > 0) {
         formData.append("image", data.image[0]);
       }
 
       const response = advertisment
-        ? axios.put(`${API}/api/${updateAPI}/${advertisment._id}`, formData, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          })
-        : await axios.post(`${API}/api/${createAPI}`, formData, {
+        ? await axios.put(
+            `${API_URL}/api/${updateAPI}/${advertisment._id}`,
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+        : await axios.post(`${API_URL}/api/${createAPI}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -60,11 +65,11 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
         }
       }
     } catch (error) {
-      console.error(error);
-      setError(true);
-      setErrorMsg(
+      console.log(error);
+      toast.error("Something went wrong!");
+      setError(
         error.response?.data?.message ||
-          "Something went wrong! It could be due to server issues or an invalid image format."
+          "It could be due to server issues or an invalid image format."
       );
     } finally {
       setLoading(false);
@@ -92,7 +97,7 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
 
           {error && (
             <p className="text-white text-center text-base font-thin italic bg-red-800 my-2">
-              Error: {errorMsg}
+              error: {error}
             </p>
           )}
 

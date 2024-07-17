@@ -39,7 +39,7 @@ const createInBetweenAds = async (req, res) => {
     res.status(201).json(savedAd);
   } catch (error) {
     res.status(500).json({ message: error.message });
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -64,7 +64,7 @@ const updateInBetweenAds = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: "Error updating this Ad!" });
-    console.error(error);
+    console.log(error);
   }
 };
 
@@ -82,7 +82,7 @@ const deleteInBetweenAds = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ message: "Error deleting this Ad!" });
-    console.error(error);
+    console.log(error);
   }
 };
 

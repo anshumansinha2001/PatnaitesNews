@@ -10,7 +10,6 @@ const AdvertisementBottomCard = () => {
         <Link
           to={advertisement.link.length ? advertisement.link : "#"}
           key={advertisement._id}
-          target="_blank"
         >
           <div className="relative">
             <img

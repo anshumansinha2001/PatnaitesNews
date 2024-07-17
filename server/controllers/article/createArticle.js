@@ -23,7 +23,7 @@ const createArticle = async (req, res) => {
     res.status(201).json(savedArticle);
   } catch (error) {
     res.status(500).json({ message: error.message });
-    console.error(error);
+    console.log(error);
   }
 };
 

@@ -11,14 +11,14 @@ const AdvertisementTable = ({
   deleteAPI,
   refetch,
 }) => {
-  const API = import.meta.env.VITE_BACKEND_API_URL;
+  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
 
   // Handle Delete Ads
   const handleDeleteAds = async (advertisment) => {
     try {
       let userChoice = window.confirm("Do you want to Delete this Add?");
       if (userChoice) {
-        await axios.delete(`${API}/api/${deleteAPI}/${advertisment._id}`);
+        await axios.delete(`${API_URL}/api/${deleteAPI}/${advertisment._id}`);
         toast.success("Advertisment deleted!");
         refetch();
       } else {

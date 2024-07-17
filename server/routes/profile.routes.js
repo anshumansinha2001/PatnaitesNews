@@ -74,6 +74,29 @@ router.put("/profile", uploadProfileLogo, async (req, res) => {
       .json({ message: "Profile updated successfully!", updatedProfile });
   } catch (error) {
     res.status(500).json({ message: error.message });
+    console.log(error);
+  }
+});
+
+// Delete LOGO
+router.delete("/profile/delete-logo", async (req, res) => {
+  try {
+    // Find the profile by name and update the logo field to an empty string or null
+    const result = await Profile.findOneAndUpdate(
+      { name: "Patnaites" },
+      { $unset: { logo: "" } },
+      { new: true } // Return the updated document
+    );
+
+    if (result) {
+      res.status(200).json({ message: "Profile logo deleted successfully." });
+    } else {
+      res
+        .status(404)
+        .json({ message: "Profile with the specified logo not found." });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
     console.error(error);
   }
 });
