@@ -281,7 +281,7 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizonta px-1 max-w-[56rem] max-h-16 overflow-x-auto p-0">
+          <ul className="menu menu-horizonta px-1 max-w-[58vw] max-h-16 lg:overflow-x-auto p-0">
             {navItems}
           </ul>
         </div>

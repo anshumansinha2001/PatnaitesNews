@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import ProfileCard from "../components/ProfileCard";
@@ -14,7 +14,6 @@ const Main = () => {
   const [articles, refetch, loading] = useFetchArticle();
 
   const scrollRef = useRef(); // Ref for scrolling
-  const location = useLocation();
 
   // Effect to scroll to top and refetch data on location change
   useEffect(() => {
@@ -22,7 +21,7 @@ const Main = () => {
       scrollRef.current.scrollTo(0, 0);
     }
     refetch(); // Refetch articles
-  }, [location]);
+  }, [refetch]);
 
   // Effect to fetch visitor count on component mount
   useEffect(() => {

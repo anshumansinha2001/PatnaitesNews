@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Spinner from "../../Loading/Spinner";
+import defaultArticleImg from "../../../assets/default_article_img.png";
 
 const PostForm = ({ post }) => {
   const { register, handleSubmit, control, setValue } = useForm();
@@ -84,6 +85,36 @@ const PostForm = ({ post }) => {
     }
   };
 
+  // Handle image delete
+  const handleDeleteImg = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      let userChoice = window.confirm(
+        `Do you want to delete this Article image and set the Default image?`
+      );
+      if (userChoice) {
+        const response = await axios.delete(
+          `${API_URL}/api/article-img/${post._id}`
+        );
+
+        if (response) {
+          toast.success("Article Img Deleted!");
+          navigate("/dashboard/articles");
+        }
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+      setError(error.response?.data?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       {loading ? (
@@ -93,10 +124,7 @@ const PostForm = ({ post }) => {
           {post && (
             <img
               className="rounded-md w-full h-64 md:h-96 object-cover"
-              src={
-                post?.img ||
-                "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
+              src={post?.img || defaultArticleImg}
               alt="Post"
             />
           )}
@@ -126,15 +154,24 @@ const PostForm = ({ post }) => {
               </div>
 
               {/* Image  */}
-              <div className="form-control w-full max-w-xs">
-                <label className="label">
-                  <span className="label-text">Image</span>
-                </label>
-                <input
-                  type="file"
-                  {...register("image")}
-                  className="file-input w-full"
-                />
+              <div className="flex justify-between items-end">
+                <div className="form-control w-full max-w-xs">
+                  <label className="label">
+                    <span className="label-text">Image</span>
+                  </label>
+                  <input
+                    type="file"
+                    {...register("image")}
+                    className="file-input w-full"
+                  />
+                </div>
+
+                <div
+                  className="btn btn-sm bg-red-700 text-white"
+                  onClick={handleDeleteImg}
+                >
+                  Delete Image
+                </div>
               </div>
 
               {/* Category & Author */}

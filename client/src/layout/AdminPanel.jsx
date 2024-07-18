@@ -14,7 +14,7 @@ const AdminPanel = () => {
         <div className="flex gap-4 p-2.5 lg:p-0">
           <DrawerSide />
         </div>
-        <div className="w-full p-2 lg:p-6 ">
+        <div className="w-full p-0 lg:p-6 ">
           <Outlet />
         </div>
       </div>

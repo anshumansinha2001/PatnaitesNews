@@ -9,7 +9,7 @@ uploadImg = multer({
   storage: storage,
   limits: { fileSize: 3000000 }, // Limit file size to 3MB
   fileFilter: function (req, file, cb) {
-    const filetypes = /jpeg|jpg|png|gif|webp/;
+    const filetypes = /jpeg|jpg|png|gif|webp|jfif|bmp|svg|tiff?|ico|heif|heic/;
     const extname = filetypes.test(
       path.extname(file.originalname).toLowerCase()
     );

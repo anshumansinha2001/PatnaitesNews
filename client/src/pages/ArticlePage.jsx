@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import SocialShare from "../components/SocialShare";
 import useFetchBetweenAds from "../hooks/useFetchBetweenAds";
 import parse from "html-react-parser";
+import defaultArticleImg from "../assets/default_article_img.png";
 
 const splitContent = (content, wordCount) => {
   // const textContent = content.replace(/(<([^>]+)>)/gi, ""); // Strip HTML tags
@@ -24,7 +25,6 @@ const ArticlePage = () => {
   const { id } = useParams();
   const [article, setArticle] = useState(null);
   const [error, setError] = useState(null);
-  const [shareUrl, setShareUrl] = useState("");
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -35,7 +35,6 @@ const ArticlePage = () => {
           throw new Error("Article not found");
         }
         setArticle(fetchedArticle);
-        setShareUrl(window.location.href);
         setError(null);
       } catch (error) {
         console.error("Error fetching article:", error);
@@ -66,57 +65,20 @@ const ArticlePage = () => {
         <title>
           {article.title ? `${article.title} | Patnaites` : "Patnaites News"}
         </title>
-        <meta
-          name="description"
-          content={
-            article.content
-              ? parse(article.content.slice(0, 150))
-              : "Get the latest news, updates, and articles from around the world."
-          }
-        />
-        <meta
-          name="keywords"
-          content="News, Breaking News, Latest News, Sports, Business, Politics, Education, Entertainment"
-        />
-        {/* Open Graph Tags for Facebook and WhatsApp */}
-        <meta property="og:title" content={article.title || "NewsPortal"} />
+        <meta name="description" content={parse(article.content)} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={parse(article.content)} />
+        <meta property="og:image" content={article?.img || defaultArticleImg} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={shareUrl} />
-        <meta
-          property="og:image"
-          content={
-            article?.img ||
-            "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-        />
-        <meta
-          property="og:description"
-          content={parse(article.content.slice(0, 150))}
-        />
-        <meta property="og:site_name" content="Patnaites" />
-        <meta property="og:locale" content="en_IN" />
-
-        {/* Twitter Meta Tags */}
+        <meta property="og:url" content={window.location.href} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title || "NewsPortal"} />
-        <meta
-          name="twitter:description"
-          content={parse(article.content.slice(0, 150))}
-        />
-        <meta
-          name="twitter:image"
-          content={
-            article?.img ||
-            "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          }
-        />
+        <meta name="twitter:title" content={article.title} />
+        <meta name="twitter:description" content={parse(article.content)} />
+        <meta name="twitter:image" content={article.img} />
       </Helmet>
 
       <img
-        src={
-          article?.img ||
-          "https://plus.unsplash.com/premium_photo-1688561384438-bfa9273e2c00?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        }
+        src={article?.img || defaultArticleImg}
         alt="Failed to load image!"
         className={`w-full ${
           !article.img ? "h-32 md:h-48" : "h-[15rem] md:h-[20rem] lg:h-[28rem]"

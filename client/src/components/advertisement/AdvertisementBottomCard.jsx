@@ -5,7 +5,7 @@ const AdvertisementBottomCard = () => {
   const [bottomAds, refetch] = useFetchBottomAds();
 
   return (
-    <div className="flex justify-center items-center gap-1 lg:gap-2 flex-wrap overflow-auto">
+    <div className="flex justify-between items-center gap-1 lg:gap-2 flex-wrap overflow-auto">
       {bottomAds &&
         bottomAds.map((advertisement) => (
           <Link
@@ -19,7 +19,7 @@ const AdvertisementBottomCard = () => {
                 className={`${
                   bottomAds.length === 1
                     ? "w-96 h-full"
-                    : "xs:h-20 xs:w-[10.2rem] sm:h-24 sm:w-[11.3rem] md:h-36 md:w-[15.4rem] lg:h-44 lg:w-[18.8rem] xl:h-52 xl:w-[22rem]"
+                    : "xs:h-[8rem] xs:w-[11.1rem] sm:h-[10rem] sm:w-[12.3rem] md:h-[12rem] md:w-[15.4rem] lg:h-44 lg:w-[18.8rem] xl:h-52 xl:w-[22rem]"
                 }`}
               />
               <p className="absolute top-1 left-1 text-sm text-gray-300 z-10">

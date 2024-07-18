@@ -47,7 +47,7 @@ const SocialShare = ({ id, title, category }) => {
         <FacebookIcon size={35} className="rounded-full" />
       </FacebookShareButton>
 
-      {/* Instagram button to copy link */}
+      {/* Share button to copy link */}
       <button
         onClick={handleShare}
         className="p-2 rounded-full bg-pink-500 text-white"
