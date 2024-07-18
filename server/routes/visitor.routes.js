@@ -3,23 +3,35 @@ const router = express.Router();
 
 const Visitor = require("../models/visitor");
 
-router.get("/count/visitors", async (req, res) => {
-  let visitors = await Visitor.findOne();
-  if (!visitors) {
-    visitors = new Visitor({ count: 1 });
-  } else {
-    visitors.count += 1;
+// Route to increment visitor count
+router.get("/visitors/increment", async (req, res) => {
+  try {
+    let visitors = await Visitor.findOne();
+    if (!visitors) {
+      visitors = new Visitor({ count: 1 });
+    } else {
+      visitors.count += 1;
+    }
+    await visitors.save();
+    res.status(200).json({ count: visitors.count });
+  } catch (error) {
+    console.error("Error incrementing visitor count:", error);
+    res.status(500).json({ error: "Failed to increment visitor count" });
   }
-  await visitors.save();
-  res.status(200).json({ count: visitors.count });
 });
 
-router.get("/show/visitors", async (req, res) => {
-  let visitors = await Visitor.findOne();
-  if (!visitors) {
-    visitors = new Visitor({ count: 0 });
+// Route to show current visitor count
+router.get("/visitors", async (req, res) => {
+  try {
+    let visitors = await Visitor.findOne();
+    if (!visitors) {
+      visitors = new Visitor({ count: 0 });
+    }
+    res.status(200).json({ count: visitors.count });
+  } catch (error) {
+    console.error("Error fetching visitor count:", error);
+    res.status(500).json({ error: "Failed to fetch visitor count" });
   }
-  res.status(200).json({ count: visitors.count });
 });
 
 module.exports = router;
