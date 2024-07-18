@@ -74,7 +74,10 @@ const ArticlePage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={article.title} />
         <meta name="twitter:description" content={parse(article.content)} />
-        <meta name="twitter:image" content={article.img} />
+        <meta
+          name="twitter:image"
+          content={article?.img || defaultArticleImg}
+        />
       </Helmet>
 
       <img

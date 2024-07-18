@@ -166,12 +166,14 @@ const PostForm = ({ post }) => {
                   />
                 </div>
 
-                <div
-                  className="btn btn-sm bg-red-700 text-white"
-                  onClick={handleDeleteImg}
-                >
-                  Delete Image
-                </div>
+                {post && (
+                  <div
+                    className="btn btn-sm bg-red-700 text-white"
+                    onClick={handleDeleteImg}
+                  >
+                    Delete Image
+                  </div>
+                )}
               </div>
 
               {/* Category & Author */}
