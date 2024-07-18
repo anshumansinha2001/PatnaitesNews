@@ -19,6 +19,7 @@ const Articles = () => {
       : articles.filter((article) => article.category === category);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     refetch();
   }, [category, refetch]);
 

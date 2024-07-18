@@ -7,8 +7,6 @@ import {
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton,
-  LinkedinIcon,
-  LinkedinShareButton,
 } from "react-share";
 
 const SocialShare = ({ title, category, content }) => {
@@ -36,15 +34,6 @@ const SocialShare = ({ title, category, content }) => {
       <TwitterShareButton url={shareUrl} title={title} hashtags={[category]}>
         <XIcon size={35} className="rounded-full" />
       </TwitterShareButton>
-
-      <LinkedinShareButton
-        url={shareUrl}
-        title={title}
-        summary={content}
-        source="Patnaites"
-      >
-        <LinkedinIcon size={35} className="rounded-full" />
-      </LinkedinShareButton>
 
       <WhatsappShareButton url={shareUrl} title={`*${title}*`} separator=" :- ">
         <WhatsappIcon size={35} className="rounded-full" />

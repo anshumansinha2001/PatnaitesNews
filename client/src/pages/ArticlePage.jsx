@@ -7,7 +7,7 @@ import SocialShare from "../components/SocialShare";
 import useFetchBetweenAds from "../hooks/useFetchBetweenAds";
 import parse from "html-react-parser";
 import defaultArticleImg from "../assets/default_article_img.png";
-import MetaDecorator from "../components/Util/MetaDecorator";
+import { Helmet } from "react-helmet";
 
 const splitContent = (content, wordCount) => {
   // const textContent = content.replace(/(<([^>]+)>)/gi, ""); // Strip HTML tags
@@ -62,11 +62,36 @@ const ArticlePage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-2">
-      <MetaDecorator
-        title={article.title}
-        description={article.content.replace(/(<([^>]+)>)/gi, "")}
-        imageUrl={article?.img || defaultArticleImg}
-      />
+      <Helmet>
+        {/* <!-- Primary Meta Tags --> */}
+        <title>{article.title} | Patnaites</title>
+        <meta name="title" content={article.title} />
+        <meta
+          name="description"
+          content={article.content.replace(/(<([^>]+)>)/gi, "")}
+        />
+        {/* <!-- Open Graph / Facebook --> */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:title" content={article.title} />
+        <meta
+          property="og:description"
+          content={article.content.replace(/(<([^>]+)>)/gi, "")}
+        />
+        <meta property="og:image" content={article?.img || defaultArticleImg} />
+        {/* <!-- Twitter --> */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={window.location.href} />
+        <meta property="twitter:title" content={article.title} />
+        <meta
+          property="twitter:description"
+          content={article.content.replace(/(<([^>]+)>)/gi, "")}
+        />
+        <meta
+          property="twitter:image"
+          content={article?.img || defaultArticleImg}
+        />
+      </Helmet>
 
       <img
         src={article?.img || defaultArticleImg}
