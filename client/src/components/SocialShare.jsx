@@ -3,22 +3,23 @@ import { FaShareSquare } from "react-icons/fa";
 import {
   FacebookIcon,
   FacebookShareButton,
-  TwitterIcon,
+  XIcon,
   TwitterShareButton,
   WhatsappIcon,
   WhatsappShareButton,
+  LinkedinIcon,
+  LinkedinShareButton,
 } from "react-share";
 
-const SocialShare = ({ id, title, category }) => {
-  const apiUrl = import.meta.env.VITE_FRONTEND_API_URL;
-  const shareUrl = `${apiUrl}/${category.toLowerCase()}/article/${id}`;
+const SocialShare = ({ title, category, content }) => {
+  const shareUrl = window.location.href;
 
   const handleShare = () => {
     if (navigator.share) {
       navigator
         .share({
-          title: `Check out this article on ${category}`,
-          text: `${title}`,
+          title: title,
+          text: content,
           url: shareUrl,
         })
         .then(() => console.log("Shared successfully"))
@@ -33,8 +34,17 @@ const SocialShare = ({ id, title, category }) => {
   return (
     <div className="flex space-x-4">
       <TwitterShareButton url={shareUrl} title={title} hashtags={[category]}>
-        <TwitterIcon size={35} className="rounded-full" />
+        <XIcon size={35} className="rounded-full" />
       </TwitterShareButton>
+
+      <LinkedinShareButton
+        url={shareUrl}
+        title={title}
+        summary={content}
+        source="Patnaites"
+      >
+        <LinkedinIcon size={35} className="rounded-full" />
+      </LinkedinShareButton>
 
       <WhatsappShareButton url={shareUrl} title={`*${title}*`} separator=" :- ">
         <WhatsappIcon size={35} className="rounded-full" />

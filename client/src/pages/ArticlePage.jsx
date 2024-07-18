@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useOutletContext, useParams } from "react-router-dom";
 import moment from "moment";
 import AdvertisementInBetweenCard from "../components/advertisement/AdvertisementInBetweenCard";
-import { Helmet } from "react-helmet";
+
 import SocialShare from "../components/SocialShare";
 import useFetchBetweenAds from "../hooks/useFetchBetweenAds";
 import parse from "html-react-parser";
 import defaultArticleImg from "../assets/default_article_img.png";
+import MetaDecorator from "../components/Util/MetaDecorator";
 
 const splitContent = (content, wordCount) => {
   // const textContent = content.replace(/(<([^>]+)>)/gi, ""); // Strip HTML tags
@@ -61,24 +62,11 @@ const ArticlePage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-2">
-      <Helmet>
-        <title>
-          {article.title ? `${article.title} | Patnaites` : "Patnaites News"}
-        </title>
-        <meta name="description" content={parse(article.content)} />
-        <meta property="og:title" content={article.title} />
-        <meta property="og:description" content={parse(article.content)} />
-        <meta property="og:image" content={article?.img || defaultArticleImg} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={window.location.href} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={article.title} />
-        <meta name="twitter:description" content={parse(article.content)} />
-        <meta
-          name="twitter:image"
-          content={article?.img || defaultArticleImg}
-        />
-      </Helmet>
+      <MetaDecorator
+        title={article.title}
+        description={article.content.replace(/(<([^>]+)>)/gi, "")}
+        imageUrl={article?.img || defaultArticleImg}
+      />
 
       <img
         src={article?.img || defaultArticleImg}
@@ -98,9 +86,9 @@ const ArticlePage = () => {
         </div>
         <div className="flex justify-end my-4">
           <SocialShare
-            id={article._id}
             title={article.title}
             category={article.category}
+            content={article.content.replace(/(<([^>]+)>)/gi, "")}
           />
         </div>
         <div className="text-justify">{parse(firstPart)}</div>
