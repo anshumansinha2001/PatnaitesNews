@@ -28,8 +28,6 @@ const Profile = () => {
     }
   }, [data, setValue]);
 
-  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-
   const onSubmit = async (submitedData) => {
     setLoading(true);
     setError(null);
@@ -45,7 +43,7 @@ const Profile = () => {
         formData.append("image", submitedData.image[0]);
       }
 
-      const response = await axios.put(`${API_URL}/api/profile`, formData, {
+      const response = await axios.put(`/api/profile`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -77,9 +75,7 @@ const Profile = () => {
         `Do you want to delete this logo and set the Default logo?`
       );
       if (userChoice) {
-        const response = await axios.delete(
-          `${API_URL}/api/profile/delete-logo`
-        );
+        const response = await axios.delete(`/api/profile/delete-logo`);
 
         if (response) {
           toast.success("Logo Deleted!");

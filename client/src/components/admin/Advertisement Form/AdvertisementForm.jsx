@@ -21,8 +21,6 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
     }
   }, [advertisment, setValue]);
 
-  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-
   // Form submission handler
   const onSubmit = async (data) => {
     setLoading(true);
@@ -40,16 +38,12 @@ const AdvertisementForm = ({ title, advertisment, createAPI, updateAPI }) => {
       }
 
       const response = advertisment
-        ? await axios.put(
-            `${API_URL}/api/${updateAPI}/${advertisment._id}`,
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          )
-        : await axios.post(`${API_URL}/api/${createAPI}`, formData, {
+        ? await axios.put(`/api/${updateAPI}/${advertisment._id}`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          })
+        : await axios.post(`/api/${createAPI}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

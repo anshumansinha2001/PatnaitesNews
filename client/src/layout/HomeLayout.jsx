@@ -10,7 +10,7 @@ import useFetchArticle from "../hooks/useFetchArticle";
 import useFetchSideAds from "../hooks/useFetchSideAds";
 import useFetchBottomAds from "../hooks/useFetchBottomAds";
 
-const Main = () => {
+const HomeLayout = () => {
   const [articles, refetch, loading] = useFetchArticle();
 
   const scrollRef = useRef(); // Ref for scrolling
@@ -25,8 +25,7 @@ const Main = () => {
 
   // Effect to fetch visitor count on component mount
   useEffect(() => {
-    const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-    fetch(`${API_URL}/api/count/visitors`)
+    fetch(`/api/visitors/increment`)
       .then((response) => response.json())
       .catch((error) => console.error("Error fetching visitor count:", error));
   }, []);
@@ -84,4 +83,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default HomeLayout;

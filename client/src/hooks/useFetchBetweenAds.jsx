@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
 const useFetchBetweenAds = () => {
-  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
   const {
     data: betweenAds = [],
     isLoading: loading,
@@ -10,7 +9,7 @@ const useFetchBetweenAds = () => {
     queryKey: ["betweenAds"],
     queryFn: async () => {
       try {
-        const response = await fetch(`${API_URL}/api/between-ads`);
+        const response = await fetch(`/api/between-ads`);
         const data = await response.json();
         // console.log("useFetchBetweenAds ::", data);
         return data;

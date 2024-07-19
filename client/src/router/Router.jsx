@@ -4,7 +4,7 @@ import {
   Route,
 } from "react-router-dom";
 
-import Main from "../layout/Main";
+import HomeLayout from "../layout/HomeLayout";
 import Home from "../pages/Home";
 import Sports from "../pages/Sports";
 import Politics from "../pages/Politics";
@@ -41,7 +41,7 @@ import Travel from "../pages/Travel";
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<Main />}>
+      <Route path="/" element={<HomeLayout />}>
         <Route index element={<Home />} />
 
         <Route path="cities" element={<Cities />} />

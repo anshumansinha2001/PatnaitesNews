@@ -28,8 +28,6 @@ const PostForm = ({ post }) => {
     }
   }, [post, setValue]);
 
-  const API_URL = import.meta.env.VITE_BACKEND_API_URL;
-
   // Form submission handler
   const onSubmit = async (data) => {
     setLoading(true);
@@ -54,12 +52,12 @@ const PostForm = ({ post }) => {
       }
 
       const response = post
-        ? await axios.put(`${API_URL}/api/article/${post._id}`, formData, {
+        ? await axios.put(`/api/article/${post._id}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
           })
-        : await axios.post(`${API_URL}/api/article`, formData, {
+        : await axios.post(`/api/article`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
@@ -95,9 +93,7 @@ const PostForm = ({ post }) => {
         `Do you want to delete this Article image and set the Default image?`
       );
       if (userChoice) {
-        const response = await axios.delete(
-          `${API_URL}/api/article-img/${post._id}`
-        );
+        const response = await axios.delete(`/api/article-img/${post._id}`);
 
         if (response) {
           toast.success("Article Img Deleted!");
