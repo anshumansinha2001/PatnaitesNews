@@ -1,6 +1,6 @@
-const Article = require("../../models/article");
+import Article from "../../models/article.js";
 
-module.exports.deleteAtricleImg = async (req, res) => {
+export const deleteArticleImg = async (req, res) => {
   const id = req.params.id;
   try {
     // Find the article by id and update the img field to an empty string or null

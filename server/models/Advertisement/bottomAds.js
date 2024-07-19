@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const bottomAdsSchema = new Schema(
   {
@@ -18,4 +18,4 @@ const bottomAdsSchema = new Schema(
 
 // create model
 const BottomAds = model("BottomAds", bottomAdsSchema);
-module.exports = BottomAds;
+export default BottomAds;

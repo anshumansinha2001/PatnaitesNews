@@ -1,6 +1,6 @@
-const Article = require("../../models/article");
+import Article from "../../models/article.js";
 
-module.exports.updateArticle = async (req, res) => {
+export const updateArticle = async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
   if (req.file) {

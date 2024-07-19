@@ -1,6 +1,6 @@
-const Article = require("../../models/article");
+import Article from "../../models/article.js";
 
-const deleteArticle = async (req, res) => {
+export const deleteArticle = async (req, res) => {
   try {
     const id = req.params.id;
     const result = await Article.findByIdAndDelete(id);
@@ -15,5 +15,3 @@ const deleteArticle = async (req, res) => {
     console.error(error.message);
   }
 };
-
-module.exports = { deleteArticle };

@@ -1,7 +1,7 @@
-const express = require("express");
-const router = express.Router();
+import express from "express";
+import Visitor from "../models/visitor.js";
 
-const Visitor = require("../models/visitor");
+const router = express.Router();
 
 // Route to increment visitor count
 router.get("/visitors/increment", async (req, res) => {
@@ -34,4 +34,4 @@ router.get("/visitors", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

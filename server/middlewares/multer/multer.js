@@ -1,11 +1,11 @@
-const multer = require("multer");
-const path = require("path");
+import multer from "multer";
+import path from "path";
 
 // Set storage engine to store files temporarily in memory
 const storage = multer.memoryStorage();
 
 // Initialize upload with multer
-uploadImg = multer({
+const uploadImg = multer({
   storage: storage,
   limits: { fileSize: 3000000 }, // Limit file size to 3MB
   fileFilter: function (req, file, cb) {
@@ -22,4 +22,4 @@ uploadImg = multer({
   },
 }).single("image"); // 'image' is the field name for the image file in the form
 
-module.exports = uploadImg;
+export default uploadImg;

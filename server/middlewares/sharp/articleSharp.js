@@ -1,6 +1,11 @@
-const path = require("path");
-const sharp = require("sharp");
-const fs = require("fs");
+import path from "path";
+import sharp from "sharp";
+import fs from "fs";
+import { fileURLToPath } from "url";
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Ensure the uploads/articles directory exists
 const rootDir = path.join(__dirname, "../../");
@@ -41,4 +46,4 @@ const convertArticleToWebp = async (req, res, next) => {
   }
 };
 
-module.exports = convertArticleToWebp;
+export default convertArticleToWebp;

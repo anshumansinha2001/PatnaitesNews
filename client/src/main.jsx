@@ -34,9 +34,9 @@ const Main = () => (
   </Provider>
 );
 
-// Client-side rendering
+// Client-side rendering with hydration
 if (typeof document !== "undefined") {
-  ReactDOM.createRoot(document.getElementById("root")).render(<Main />);
+  ReactDOM.hydrateRoot(document.getElementById("root"), <Main />);
 }
 
 export default Main;

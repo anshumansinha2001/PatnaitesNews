@@ -1,10 +1,9 @@
-const express = require("express");
-const uploadImg = require("../middlewares/multer/multer");
-const convertLogoImgToWebp = require("../middlewares/sharp/profileLogoSharp");
+import express from "express";
+import uploadImg from "../middlewares/multer/multer.js";
+import convertLogoImgToWebp from "../middlewares/sharp/profileLogoSharp.js";
+import Profile from "../models/profile.js";
 
 const router = express.Router();
-
-const Profile = require("../models/profile");
 
 // GET PATNAITES PROFILE DETAILS
 router.get("/profile", async (req, res) => {
@@ -134,4 +133,4 @@ router.post("/profile", uploadImg, convertLogoImgToWebp, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

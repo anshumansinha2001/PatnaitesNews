@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 // Create Schema for Articles
 const articleSchema = new Schema(
@@ -40,4 +40,4 @@ articleSchema.index({ title: "text", content: "text" });
 
 // create model
 const Article = model("Article", articleSchema);
-module.exports = Article;
+export default Article;

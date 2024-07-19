@@ -1,8 +1,8 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const visitorSchema = new Schema({
   count: { type: Number, default: 0 },
 });
 
 const Visitor = model("Visitor", visitorSchema);
-module.exports = Visitor;
+export default Visitor;

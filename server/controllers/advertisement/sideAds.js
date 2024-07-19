@@ -1,7 +1,7 @@
-const SideAds = require("../../models/Advertisement/sideAds");
+import SideAds from "../../models/Advertisement/sideAds.js";
 
 // GET All Side Ads
-const getAllSideAds = async (req, res) => {
+export const getAllSideAds = async (req, res) => {
   try {
     // Fetch all side ads sorted by creation date
     const Ads = await SideAds.find().sort({ createdAt: -1 });
@@ -20,7 +20,7 @@ const getAllSideAds = async (req, res) => {
 };
 
 // CREATE ADS
-const createSideAds = async (req, res) => {
+export const createSideAds = async (req, res) => {
   const { link } = req.body;
   const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
 
@@ -44,7 +44,7 @@ const createSideAds = async (req, res) => {
 };
 
 // UPDATE ADS
-const updateSideAds = async (req, res) => {
+export const updateSideAds = async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
 
@@ -69,7 +69,7 @@ const updateSideAds = async (req, res) => {
 };
 
 // DELETE ADS
-const deleteSideAds = async (req, res) => {
+export const deleteSideAds = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -85,5 +85,3 @@ const deleteSideAds = async (req, res) => {
     console.log(error);
   }
 };
-
-module.exports = { getAllSideAds, createSideAds, updateSideAds, deleteSideAds };

@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+import { Schema, model } from "mongoose";
 
 const inBetweenAdsSchema = new Schema(
   {
@@ -18,4 +18,4 @@ const inBetweenAdsSchema = new Schema(
 
 // create model
 const InBetweenAds = model("InBetweenAds", inBetweenAdsSchema);
-module.exports = InBetweenAds;
+export default InBetweenAds;

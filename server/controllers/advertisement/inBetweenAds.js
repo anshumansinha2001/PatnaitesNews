@@ -1,7 +1,7 @@
-const InBetweenAds = require("../../models/Advertisement/inBetweenAds");
+import InBetweenAds from "../../models/Advertisement/inBetweenAds.js";
 
 // GET All between Ads
-const getAllInBetweenAds = async (req, res) => {
+export const getAllInBetweenAds = async (req, res) => {
   try {
     // Fetch all between ads sorted by creation date
     const Ads = await InBetweenAds.find().sort({ createdAt: -1 });
@@ -20,7 +20,7 @@ const getAllInBetweenAds = async (req, res) => {
 };
 
 // CREATE ADS
-const createInBetweenAds = async (req, res) => {
+export const createInBetweenAds = async (req, res) => {
   const { link } = req.body;
   const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
 
@@ -44,7 +44,7 @@ const createInBetweenAds = async (req, res) => {
 };
 
 // UPDATE ADS
-const updateInBetweenAds = async (req, res) => {
+export const updateInBetweenAds = async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
 
@@ -69,7 +69,7 @@ const updateInBetweenAds = async (req, res) => {
 };
 
 // DELETE ADS
-const deleteInBetweenAds = async (req, res) => {
+export const deleteInBetweenAds = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -84,11 +84,4 @@ const deleteInBetweenAds = async (req, res) => {
     res.status(500).json({ message: "Error deleting this Ad!" });
     console.log(error);
   }
-};
-
-module.exports = {
-  getAllInBetweenAds,
-  createInBetweenAds,
-  updateInBetweenAds,
-  deleteInBetweenAds,
 };

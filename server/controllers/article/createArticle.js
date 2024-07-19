@@ -1,6 +1,6 @@
-const Article = require("../../models/article");
+import Article from "../../models/article.js";
 
-const createArticle = async (req, res) => {
+export const createArticle = async (req, res) => {
   const { title, isBreakingNews, content, author, category } = req.body;
   const img = req.file ? `uploads/articles/${req.file.filename}` : null;
 
@@ -26,5 +26,3 @@ const createArticle = async (req, res) => {
     console.log(error);
   }
 };
-
-module.exports = { createArticle };

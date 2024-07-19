@@ -1,29 +1,29 @@
-const express = require("express");
-const uploadImg = require("../middlewares/multer/multer");
-const convertAdvertisementToWebp = require("../middlewares/sharp/advertisementSharp");
+import express from "express";
+import uploadImg from "../middlewares/multer/multer.js";
+import convertAdvertisementToWebp from "../middlewares/sharp/advertisementSharp.js";
 
-const router = express.Router();
-
-const {
+import {
   getAllSideAds,
   createSideAds,
   updateSideAds,
   deleteSideAds,
-} = require("../controllers/advertisement/sideAds");
+} from "../controllers/advertisement/sideAds.js";
 
-const {
+import {
   getAllInBetweenAds,
   createInBetweenAds,
   updateInBetweenAds,
   deleteInBetweenAds,
-} = require("../controllers/advertisement/inBetweenAds");
+} from "../controllers/advertisement/inBetweenAds.js";
 
-const {
+import {
   createBottomAds,
   getAllBottomAds,
   updateBottomAds,
   deleteBottomAds,
-} = require("../controllers/advertisement/bottomAds");
+} from "../controllers/advertisement/bottomAds.js";
+
+const router = express.Router();
 
 // FOR SIDE ADS
 router.get("/side-ads", getAllSideAds);
@@ -68,4 +68,4 @@ router.put(
 );
 router.delete("/bottom-ads/:id", deleteBottomAds);
 
-module.exports = router;
+export default router;

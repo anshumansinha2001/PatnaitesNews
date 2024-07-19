@@ -1,16 +1,18 @@
-require("dotenv").config();
-const express = require("express");
-const cors = require("cors");
-const path = require("path");
-const connectDb = require("./database/db");
-
-const app = express();
+import dotenv from "dotenv";
+dotenv.config();
+import path from "path";
+import express from "express";
+import cors from "cors";
+import connectDb from "./database/db.js";
+import { fileURLToPath } from "url";
 
 // Importing routes
-const articleRouter = require("./routes/article.routes");
-const profileRouter = require("./routes/profile.routes");
-const advertisementRouter = require("./routes/advertisement.routes");
-const visitorRouter = require("./routes/visitor.routes");
+import articleRouter from "./routes/article.routes.js";
+import profileRouter from "./routes/profile.routes.js";
+import advertisementRouter from "./routes/advertisement.routes.js";
+import visitorRouter from "./routes/visitor.routes.js";
+
+const app = express();
 
 // Handling CORS policy issue which occurs due to running two different servers for frontend or backend
 const corsOptions = {
@@ -23,6 +25,10 @@ app.use(cors(corsOptions));
 
 // Middlewares
 app.use(express.json()); // Middleware for parsing JSON bodies
+
+// Get the directory name of the current module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Middleware to serve static files from the "uploads" directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

@@ -1,7 +1,7 @@
-const BottomAds = require("../../models/Advertisement/bottomAds");
+import BottomAds from "../../models/Advertisement/bottomAds.js";
 
 // GET All bottom Ads
-const getAllBottomAds = async (req, res) => {
+export const getAllBottomAds = async (req, res) => {
   try {
     // Fetch all bottom ads sorted by creation date
     const Ads = await BottomAds.find().sort({ createdAt: -1 });
@@ -20,7 +20,7 @@ const getAllBottomAds = async (req, res) => {
 };
 
 // CREATE ADS
-const createBottomAds = async (req, res) => {
+export const createBottomAds = async (req, res) => {
   const { link } = req.body;
   const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
 
@@ -44,7 +44,7 @@ const createBottomAds = async (req, res) => {
 };
 
 // UPDATE ADS
-const updateBottomAds = async (req, res) => {
+export const updateBottomAds = async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
 
@@ -69,7 +69,7 @@ const updateBottomAds = async (req, res) => {
 };
 
 // DELETE ADS
-const deleteBottomAds = async (req, res) => {
+export const deleteBottomAds = async (req, res) => {
   try {
     const id = req.params.id;
 
@@ -84,11 +84,4 @@ const deleteBottomAds = async (req, res) => {
     res.status(500).json({ message: "Error deleting this Ad!" });
     console.log(error);
   }
-};
-
-module.exports = {
-  getAllBottomAds,
-  createBottomAds,
-  updateBottomAds,
-  deleteBottomAds,
 };

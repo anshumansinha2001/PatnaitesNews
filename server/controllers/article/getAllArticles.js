@@ -1,6 +1,6 @@
-const Article = require("../../models/article");
+import Article from "../../models/article.js";
 
-const getAllArticles = async (req, res) => {
+export const getAllArticles = async (req, res) => {
   try {
     // Fetch all articles sorted by creation date
     const articles = await Article.find().sort({ createdAt: -1 });
@@ -19,5 +19,3 @@ const getAllArticles = async (req, res) => {
     console.error(error.message);
   }
 };
-
-module.exports = { getAllArticles };
