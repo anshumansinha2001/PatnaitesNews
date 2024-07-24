@@ -1,4 +1,5 @@
 import SideAds from "../../models/Advertisement/sideAds.js";
+import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 // GET All Side Ads
 export const getAllSideAds = async (req, res) => {
@@ -6,13 +7,7 @@ export const getAllSideAds = async (req, res) => {
     // Fetch all side ads sorted by creation date
     const Ads = await SideAds.find().sort({ createdAt: -1 });
 
-    // Adjust ads to include full image URLs
-    const formattedAds = Ads.map((ad) => ({
-      ...ad.toObject(),
-      img: ad.img ? `${req.protocol}://${req.headers.host}/${ad.img}` : null,
-    }));
-
-    res.status(200).json(formattedAds);
+    res.status(200).json(Ads);
   } catch (error) {
     res.status(500).json({ message: "Failed to retrieve SideAds" });
     console.error(error.message);
@@ -22,7 +17,9 @@ export const getAllSideAds = async (req, res) => {
 // CREATE ADS
 export const createSideAds = async (req, res) => {
   const { link } = req.body;
-  const img = req.file ? `uploads/advertisements/${req.file.filename}` : null;
+
+  const AdvertisementImgLocalPath = req.file?.path;
+  const img = await uploadOnCloudinary(AdvertisementImgLocalPath);
 
   try {
     const adExists = await SideAds.findOne({ img });
@@ -49,7 +46,9 @@ export const updateSideAds = async (req, res) => {
   const updatedData = req.body;
 
   if (req.file) {
-    updatedData.img = `uploads/advertisements/${req.file.filename}`;
+    const AdvertisementImgLocalPath = req.file.path;
+    const imgURL = await uploadOnCloudinary(AdvertisementImgLocalPath);
+    updatedData.img = imgURL;
   }
 
   try {

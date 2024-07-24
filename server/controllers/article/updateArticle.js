@@ -1,10 +1,14 @@
 import Article from "../../models/article.js";
+import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 export const updateArticle = async (req, res) => {
   const id = req.params.id;
   const updatedData = req.body;
+
   if (req.file) {
-    updatedData.img = `uploads/articles/${req.file.filename}`;
+    const articleImgLocalPath = req.file.path;
+    const imgURL = await uploadOnCloudinary(articleImgLocalPath);
+    updatedData.img = imgURL;
   }
 
   try {

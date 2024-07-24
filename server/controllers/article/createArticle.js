@@ -1,8 +1,11 @@
 import Article from "../../models/article.js";
+import { uploadOnCloudinary } from "../../utils/cloudinary.js";
 
 export const createArticle = async (req, res) => {
   const { title, isBreakingNews, content, author, category } = req.body;
-  const img = req.file ? `uploads/articles/${req.file.filename}` : null;
+
+  const articleImgLocalPath = req.file?.path;
+  const img = await uploadOnCloudinary(articleImgLocalPath);
 
   try {
     const articleExists = await Article.findOne({ title });

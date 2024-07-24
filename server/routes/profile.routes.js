@@ -2,6 +2,7 @@ import express from "express";
 import uploadImg from "../middlewares/multer/multer.js";
 import convertLogoImgToWebp from "../middlewares/sharp/profileLogoSharp.js";
 import Profile from "../models/profile.js";
+import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const router = express.Router();
 
@@ -15,15 +16,7 @@ router.get("/profile", async (req, res) => {
       return res.status(404).json({ message: "Profile not found!" });
     }
 
-    // Format the profile to include full image URL for the logo
-    const formattedProfile = {
-      ...profile.toObject(),
-      logo: profile.logo
-        ? `${req.protocol}://${req.headers.host}/${profile.logo}`
-        : null,
-    };
-
-    res.status(200).json(formattedProfile);
+    res.status(200).json(profile);
   } catch (error) {
     res
       .status(500)
@@ -36,10 +29,20 @@ router.get("/profile", async (req, res) => {
 router.put("/profile", uploadImg, convertLogoImgToWebp, async (req, res) => {
   const { mail, portfolio, fbFollowers, instaFollowers, ytFollowers } =
     req.body;
-  let logo;
+
+  // Prepare the update object
+  const updateData = {
+    mail,
+    portfolio,
+    fbFollowers,
+    instaFollowers,
+    ytFollowers,
+  };
 
   if (req.file) {
-    logo = `uploads/${req.file.filename}`;
+    const LogoImgLocalPath = req.file.path;
+    const logoURL = await uploadOnCloudinary(LogoImgLocalPath);
+    updateData.logo = logoURL;
   }
 
   try {
@@ -48,19 +51,6 @@ router.put("/profile", uploadImg, convertLogoImgToWebp, async (req, res) => {
 
     if (!profile) {
       return res.status(404).json({ message: "This profile is not valid!" });
-    }
-
-    // Prepare the update object
-    const updateData = {
-      mail,
-      portfolio,
-      fbFollowers,
-      instaFollowers,
-      ytFollowers,
-    };
-
-    if (logo) {
-      updateData.logo = logo;
     }
 
     // Update the profile
