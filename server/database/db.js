@@ -3,8 +3,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Construct the MongoDB connection URL
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.tgei7xv.mongodb.net/Newsdb?retryWrites=true&w=majority&appName=Cluster0`;
-
+const url = process.env.MONGO_URI;
 // Function to connect to the MongoDB database
 const connectDb = async () => {
   try {

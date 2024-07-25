@@ -53,8 +53,8 @@ This project is a React-based news website created for a client, utilizing the M
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/react-news-website.git
-   cd react-news-website
+   git clone https://github.com/anshumansinha2001/PatnaitesNews.git
+   cd patnaitesnews
 
    ```
 
@@ -103,8 +103,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - **Cloudinary:** For easy cloud storage solutions.
 - **Multer:** For handling file uploads.
 - **TailwindCSS:** For a great utility-first CSS framework.
-
-```
-
-Feel free to adjust the sections according to your specific needs!
-```
