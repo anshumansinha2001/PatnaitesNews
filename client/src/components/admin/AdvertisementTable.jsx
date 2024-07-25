@@ -17,7 +17,7 @@ const AdvertisementTable = ({
       let userChoice = window.confirm("Do you want to Delete this Add?");
       if (userChoice) {
         await axios.delete(`/api/${deleteAPI}/${advertisment._id}`);
-        toast.success("Advertisment deleted!");
+        toast.info("Advertisment deleted!");
         refetch();
       } else {
         return;

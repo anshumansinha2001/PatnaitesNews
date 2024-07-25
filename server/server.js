@@ -3,8 +3,8 @@ dotenv.config();
 import path from "path";
 import express from "express";
 import cors from "cors";
-import connectDb from "./database/db.js";
 import { fileURLToPath } from "url";
+import connectDb from "./database/db.js";
 
 // Importing routes
 import articleRouter from "./routes/article.routes.js";
@@ -14,23 +14,23 @@ import visitorRouter from "./routes/visitor.routes.js";
 
 const app = express();
 
-// Handling CORS policy issue which occurs due to running two different servers for frontend or backend
+// CORS configuration
 const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
-  optionsSuccessStatus: 200, // For legacy browser support
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
 // Middlewares
-app.use(express.json()); // Middleware for parsing JSON bodies
+app.use(express.json()); // Parse JSON bodies
 
-// Get the directory name of the current module
+// Determine the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Middleware to serve static files from the "uploads" directory
+// Serve static files from the "uploads" directory
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // API routes
@@ -39,16 +39,16 @@ app.use("/api", profileRouter);
 app.use("/api", advertisementRouter);
 app.use("/api", visitorRouter);
 
-// Enhanced error handling middleware
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Something went wrong!" });
 });
 
-// Serve static files from the dist directory
+// Serve static files from the "dist" directory
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// Serve the main HTML file for any other routes
+// Fallback route to serve the main HTML file for unknown routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
@@ -56,7 +56,6 @@ app.get("*", (req, res) => {
 // Start the server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
-  // Connect to the database
-  connectDb();
+  connectDb(); // Connect to the database
   console.log(`Server running at http://localhost:${PORT}`);
 });

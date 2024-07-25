@@ -78,7 +78,7 @@ const Profile = () => {
         const response = await axios.delete(`/api/profile/delete-logo`);
 
         if (response) {
-          toast.success("Logo Deleted!");
+          toast.info("Logo Deleted!");
           navigate("/dashboard");
         }
       } else {

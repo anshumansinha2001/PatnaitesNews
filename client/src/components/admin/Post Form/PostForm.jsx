@@ -93,10 +93,12 @@ const PostForm = ({ post }) => {
         `Do you want to delete this Article image and set the Default image?`
       );
       if (userChoice) {
-        const response = await axios.delete(`/api/article-img/${post._id}`);
+        const response = await axios.delete(
+          `/api/article/delete-img/${post._id}`
+        );
 
         if (response) {
-          toast.success("Article Img Deleted!");
+          toast.info("Article Img Deleted!");
           navigate("/dashboard/articles");
         }
       } else {

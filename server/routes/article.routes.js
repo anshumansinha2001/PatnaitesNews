@@ -16,6 +16,6 @@ router.get("/article", getAllArticles);
 router.post("/article", uploadImg, convertArticleToWebp, createArticle);
 router.put("/article/:id", uploadImg, convertArticleToWebp, updateArticle);
 router.delete("/article/:id", deleteArticle);
-router.delete("/article-img/:id", deleteArticleImg);
+router.delete("/article/delete-img/:id", deleteArticleImg);
 
 export default router;

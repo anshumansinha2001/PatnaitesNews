@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEdit, FaFilter, FaTrash } from "react-icons/fa";
 import moment from "moment";
@@ -13,15 +13,14 @@ const Articles = () => {
   const [category, setCategory] = useState("All");
 
   // Filter articles based on selected category
-  const filteredArticles =
-    category === "All"
-      ? articles
-      : articles.filter((article) => article.category === category);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    refetch();
-  }, [category, refetch]);
+  // useMemo means it only recalculates the result when the dependencies change, rather than on every render
+  const filteredArticles = useMemo(
+    () =>
+      category === "All"
+        ? articles
+        : articles.filter((article) => article.category === category),
+    [category, articles]
+  );
 
   // Handle Delete Items
   const handleDeleteItem = async (article) => {
@@ -32,7 +31,7 @@ const Articles = () => {
       if (userChoice) {
         await axios.delete(`/api/article/${article._id}`);
         refetch();
-        toast.success("Article deleted!");
+        toast.info("Article deleted!");
       } else {
         return;
       }
@@ -85,10 +84,11 @@ const Articles = () => {
               </tr>
             </thead>
 
+            {/* body */}
             <tbody className="text-center">
               {filteredArticles.length ? (
                 filteredArticles.map((article, index) => (
-                  <tr key={index}>
+                  <tr key={article._id}>
                     <th>{index + 1}</th>
                     <td className="min-w-96">
                       <div className="flex items-center gap-3 w-fit">
