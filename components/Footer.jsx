@@ -53,7 +53,7 @@ const Footer = () => {
             </Link>
             <div>
               <p className="font-serif text-lg font-bold">
-                Patnaites<span className="text-accent">Media</span>
+                Patnaites <span className="text-accent">Media</span>
               </p>
               <p className="text-sm text-gray-400">
                 Serving trusted content since 2016

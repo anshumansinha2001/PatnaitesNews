@@ -15,7 +15,7 @@ const Navbar = ({ right }) => {
           aria-label="Patnaites Media — Home"
         >
           <span className="font-serif text-xl font-bold tracking-tight text-ink md:text-2xl">
-            Patnaites<span className="text-accent">Media</span>
+            Patnaites <span className="text-accent">Media</span>
           </span>
           <Image
             src={assets.blue_tick}
