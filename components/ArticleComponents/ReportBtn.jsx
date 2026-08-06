@@ -1,7 +1,6 @@
 "use client";
-import { assets } from "@/assets/assets";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { FiFlag } from "react-icons/fi";
 
 const ReportBtn = ({ slug }) => {
   const router = useRouter();
@@ -12,9 +11,9 @@ const ReportBtn = ({ slug }) => {
   return (
     <button
       onClick={handleReport}
-      className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#000000] text-xs sm:text-base active:bg-[#ff0000] active:text-white"
+      className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent md:px-5"
     >
-      Report <Image src={assets.arrow} alt="arrow" />
+      <FiFlag className="text-[15px]" /> Report
     </button>
   );
 };

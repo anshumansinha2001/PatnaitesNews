@@ -1,9 +1,8 @@
-import { assets } from "@/assets/assets";
+"use client";
 import axios from "axios";
-import Image from "next/image";
-import Link from "next/link";
 import React from "react";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Header = () => {
   const [email, setEmail] = React.useState("");
@@ -28,68 +27,64 @@ const Header = () => {
       toast.error(errMsg);
       console.error(
         "Error subscribing to newsletter:",
-        error.response.data.message
+        error.response?.data?.message
       );
       console.log(error);
     }
   };
 
   return (
-    <div className="bg-gray-100 py-5 px-5 md:px-12 lg:px-28">
-      <div className="flex justify-between items-center">
-        {/* Logo */}
-        <Link
-          href="/"
-          className="flex gap-1 text-md md:text-2xl font-medium text-black font-serif tracking-widest uppercase 
-     hover:cursor-pointer underline underline-offset-4
-     decoration-4 decoration-dotted"
-        >
-          Patnaites Media
-          <Image
-            src={assets.blue_tick}
-            className="w-6 md:w-8"
-            alt="blue tick"
-          />
-        </Link>
+    <section className="border-b border-gray-200 bg-gradient-to-b from-gray-50 to-white">
+      <ToastContainer theme="colored" position="top-right" />
+      <div className="mx-auto max-w-content px-5 py-14 text-center md:px-8 md:py-20">
+        <span className="inline-flex items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-muted">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
+          </span>
+          Serving Patna since 2016
+        </span>
 
-        {/* Contact Us Link */}
-        <Link
-          href="/contact"
-          className="flex items-center gap-2 font-medium py-1 px-3 sm:py-3 sm:px-6 border border-black border-solid shadow-[-7px_7px_0px_#ff0000] text-xs sm:text-base active:bg-black active:text-white"
-        >
-          Contact Us <Image src={assets.arrow} alt="arrow" />
-        </Link>
-      </div>
-      <div className="text-center mt-10">
-        <h1 className="text-3xl sm:text-5xl font-medium">Latest News</h1>
-        <p className="mt-3 md:mt-10 max-w-[740px] mx-auto text-xs sm:text-base">
-          Stay informed with the most up-to-date and reliable news on local and
-          global events.
+        <h1 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl md:text-6xl">
+          The Latest News from{" "}
+          <span className="text-accent">Patna &amp; Bihar</span>
+        </h1>
+
+        <p className="mx-auto mt-5 max-w-xl text-base text-muted sm:text-lg">
+          Stay informed with the most up-to-date and reliable reporting on local
+          and global events — clear, fast, and trustworthy.
         </p>
-        {/* NewsLetter */}
+
+        {/* Newsletter */}
         <form
           onSubmit={onSubmitHandler}
-          className="flex justify-between max-w-[500px] scale-75 sm:scale-100 mt-3 md:mt-10 mx-auto border border-black shadow-[-7px_7px_0px_#ff0000]"
-          action=""
+          className="mx-auto mt-9 flex w-full max-w-md flex-col gap-3 sm:flex-row"
         >
+          <label htmlFor="email" className="sr-only">
+            Email address
+          </label>
           <input
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             type="email"
             name="email"
             id="email"
+            required
             placeholder="Enter your email"
-            className="pl-4 w-full outline-none"
+            className="w-full flex-1 rounded-full border border-gray-300 bg-white px-5 py-3 text-sm outline-none transition-colors placeholder:text-gray-400 focus:border-accent"
           />
           <button
             type="submit"
-            className="border-l  border-black py-4 px-4 sm:px-8 active:bg-[#ff0000] active:text-white"
+            className="rounded-full bg-accent px-7 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-accent-dark"
           >
             Subscribe
           </button>
         </form>
+        <p className="mt-3 text-xs text-gray-400">
+          Join our readers. No spam, unsubscribe anytime.
+        </p>
       </div>
-    </div>
+    </section>
   );
 };
 
