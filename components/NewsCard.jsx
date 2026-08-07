@@ -28,13 +28,15 @@ const NewsCard = ({
   image,
   title,
   description,
+  excerpt,
+  readingMinutes,
   category,
   updatedAt,
   featured = false,
 }) => {
   const href = `/${category.toLowerCase()}/${slug}`;
-  const cleanDesc = stripHtml(description);
-  const mins = readingTime(description);
+  const cleanDesc = stripHtml(excerpt ?? description ?? "");
+  const mins = readingMinutes ?? readingTime(description ?? excerpt ?? "");
 
   if (featured) {
     return (

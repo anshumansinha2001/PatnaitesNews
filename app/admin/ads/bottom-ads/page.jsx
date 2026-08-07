@@ -89,10 +89,7 @@ const Page = () => {
                   {/* Image */}
                   <td className="px-6 py-4">
                     <Image
-                      src={
-                        ad.image ||
-                        `${process.env.NEXT_PUBLIC_DOMAIN}/favicon.ico`
-                      }
+                      src={ad.image || `/favicon.ico`}
                       width={300}
                       height={300}
                       className="w-[200px] h-[120px] rounded-md"

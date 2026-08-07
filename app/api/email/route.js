@@ -2,14 +2,10 @@ import connectDB from "@/lib/config/db";
 import EmailModel from "@/lib/models/emailModel";
 import { NextResponse } from "next/server";
 
-const LoadDB = async () => {
-  await connectDB();
-};
-LoadDB();
-
 // API insert new Email
 export async function POST(request) {
   try {
+    await connectDB();
     const formData = await request.formData();
     const email = formData.get("email");
 
@@ -50,6 +46,7 @@ export async function POST(request) {
 // API get all Emails
 export async function GET(request) {
   try {
+    await connectDB();
     const emails = await EmailModel.find().sort({ createdAt: -1 });
     return NextResponse.json({ success: true, emails });
   } catch (error) {
@@ -64,6 +61,7 @@ export async function GET(request) {
 // API delete Email
 export async function DELETE(request) {
   try {
+    await connectDB();
     const id = request.nextUrl.searchParams.get("id");
     await EmailModel.findByIdAndDelete(id);
     return NextResponse.json({

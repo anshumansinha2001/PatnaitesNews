@@ -75,17 +75,11 @@ const PostPage = ({ post }) => {
       setLoading(true);
       let response;
       if (post) {
-        response = await axios.put(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/article?id=${post._id}`,
-          formData
-        );
+        response = await axios.put(`/api/article?id=${post._id}`, formData);
         setLoading(false);
         toast.success(response.data.message || "Article updated successfully");
       } else {
-        response = await axios.post(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
-          formData
-        );
+        response = await axios.post(`/api/article`, formData);
         setLoading(false);
         toast.success(response.data.message || "Article created successfully");
       }
@@ -125,7 +119,7 @@ const PostPage = ({ post }) => {
 
     try {
       setLoading(true);
-      await axios.delete(`${process.env.NEXT_PUBLIC_DOMAIN}/api/article`, {
+      await axios.delete(`/api/article`, {
         params: { id: articleId },
       });
 

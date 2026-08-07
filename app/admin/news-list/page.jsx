@@ -45,7 +45,7 @@ const Page = () => {
     }
 
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_DOMAIN}/api/article`, {
+      await axios.delete(`/api/article`, {
         params: { id: articleId },
       });
       toast.info("Article deleted successfully!");

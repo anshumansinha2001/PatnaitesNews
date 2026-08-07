@@ -3,6 +3,11 @@ import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import NewsList from "@/components/NewsList";
 import ScrollToTop from "@/components/ScrollToTop";
+import { getArticlesLite } from "@/lib/data/articles";
+
+// Regenerate the cached page at most once a minute (ISR) — fast for readers,
+// fresh enough for news.
+export const revalidate = 60;
 
 const siteUrl =
   process.env.NEXT_PUBLIC_DOMAIN || "https://patnaites.vercel.app";
@@ -11,7 +16,6 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Patnaites Media",
-  alternateName: "Patnaites Media",
   url: siteUrl,
   description:
     "Latest news from Patna and Bihar — local updates, city happenings, and national news since 2016.",
@@ -29,7 +33,14 @@ const websiteSchema = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  let initialArticles = [];
+  try {
+    initialArticles = await getArticlesLite();
+  } catch (error) {
+    console.error("Home: failed to load initial articles", error);
+  }
+
   return (
     <>
       <script
@@ -40,7 +51,7 @@ export default function Home() {
         <Navbar />
         <Header />
         <main className="flex-1">
-          <NewsList />
+          <NewsList initialArticles={initialArticles} />
         </main>
         <ScrollToTop />
         <Footer />

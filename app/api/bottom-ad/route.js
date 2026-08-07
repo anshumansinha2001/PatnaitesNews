@@ -1,3 +1,4 @@
+import connectDB from "@/lib/config/db";
 import BottomAdsModel from "@/lib/models/bottomAdsModel";
 import { NextResponse } from "next/server";
 import {
@@ -9,6 +10,7 @@ import {
 // API Endpoint for creating a new advertisement
 export async function POST(request) {
   try {
+    await connectDB();
     const formData = await request.formData();
 
     // Validate image and link
@@ -38,6 +40,7 @@ export async function PUT(request) {
   const id = request.nextUrl.searchParams.get("id");
 
   try {
+    await connectDB();
     const ad = await BottomAdsModel.findById(id);
     if (!ad) {
       return handleError("Ad not found", 404);
@@ -75,6 +78,7 @@ export async function GET(request) {
   const id = request.nextUrl.searchParams.get("id"); // Get the 'id' query param
 
   try {
+    await connectDB();
     // If 'id' is present, fetch the specific ad
     if (id) {
       const ad = await BottomAdsModel.findById(id);
@@ -113,6 +117,7 @@ export async function DELETE(request) {
   }
 
   try {
+    await connectDB();
     const ad = await BottomAdsModel.findById(id);
 
     if (!ad) {

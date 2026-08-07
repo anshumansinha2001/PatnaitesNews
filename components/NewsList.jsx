@@ -8,12 +8,15 @@ const PER_PAGE = 22;
 
 const stripHtml = (html = "") => html.replace(/(<([^>]+)>)/gi, " ");
 
-const NewsList = () => {
+const NewsList = ({ initialArticles }) => {
+  const hasInitial =
+    Array.isArray(initialArticles) && initialArticles.length > 0;
+
   const [menu, setMenu] = useState("All");
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
-  const [aticles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [aticles, setArticles] = useState(initialArticles || []);
+  const [loading, setLoading] = useState(!hasInitial);
 
   const fetchArticles = async () => {
     try {
@@ -27,12 +30,15 @@ const NewsList = () => {
   };
 
   useEffect(() => {
-    fetchArticles();
+    // Articles are usually server-rendered (fast + SEO). Only fetch on the
+    // client if the server didn't provide them (e.g. a transient DB hiccup).
+    if (!hasInitial) fetchArticles();
     // Support the WebSite SearchAction / sitelinks searchbox: /?q=term
     if (typeof window !== "undefined") {
       const q = new URLSearchParams(window.location.search).get("q");
       if (q) setQuery(q);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Extract unique categories from article data
@@ -48,7 +54,7 @@ const NewsList = () => {
       if (!inCategory) return false;
       if (!q) return true;
       const haystack = `${article.title} ${article.category} ${stripHtml(
-        article.description,
+        article.excerpt || article.description || "",
       )}`.toLowerCase();
       return haystack.includes(q);
     });

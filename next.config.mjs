@@ -1,20 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/**", // This will allow all images from Cloudinary
-      },
-    ],
+    // Serve optimized, right-sized images straight from Cloudinary's CDN.
+    loader: "custom",
+    loaderFile: "./lib/cloudinaryLoader.js",
   },
+
+  // Keep the response fast and lean.
+  compress: true,
+  poweredByHeader: false,
 
   async rewrites() {
     return [
       {
         source: "/sitemap.xml", // When someone visits /sitemap.xml
-        destination: "/sitemap", // Serve the sitemap from the app/sitemap/route.js
+        destination: "/sitemap", // Serve the sitemap from app/sitemap/route.js
       },
     ];
   },

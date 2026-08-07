@@ -1,23 +1,15 @@
-import axios from "axios";
 import NewsCard from "@/components/NewsCard";
+import { getRelatedArticles } from "@/lib/data/articles";
 
 // Shows up to 3 more stories from the same category (falls back to latest).
 const RelatedArticles = async ({ category, currentSlug }) => {
-  let articles = [];
-
+  let related = [];
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`
-    );
-    articles = response.data.articles || [];
+    related = await getRelatedArticles(category, currentSlug, 3);
   } catch (error) {
-    console.log("Error fetching related articles:", error);
+    console.error("Error fetching related articles:", error);
     return null;
   }
-
-  const pool = articles.filter((a) => a.slug !== currentSlug);
-  const sameCategory = pool.filter((a) => a.category === category);
-  const related = (sameCategory.length ? sameCategory : pool).slice(0, 3);
 
   if (!related.length) return null;
 

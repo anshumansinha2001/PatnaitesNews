@@ -20,7 +20,7 @@ const NewsTableItem = ({
     <tr className="bg-white border-b text-center">
       <td className="px-6 py-4">
         <Image
-          src={image || `${process.env.NEXT_PUBLIC_DOMAIN}/favicon.ico`}
+          src={image || `/favicon.ico`}
           width={50}
           height={50}
           className="w-50 h-12 rounded-full"

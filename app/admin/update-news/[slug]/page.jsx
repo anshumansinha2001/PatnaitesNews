@@ -10,12 +10,9 @@ const UpdatePage = ({ params }) => {
 
   const fetchArticles = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
-        {
-          params: { slug: params.slug },
-        }
-      );
+      const response = await axios.get(`/api/article`, {
+        params: { slug: params.slug },
+      });
       setArticles(response.data.article);
       setLoading(false);
     } catch (error) {

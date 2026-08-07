@@ -35,7 +35,7 @@ const Page = () => {
     if (!userConfirmed) return;
 
     try {
-      await axios.delete(`${process.env.NEXT_PUBLIC_DOMAIN}/api/email`, {
+      await axios.delete(`/api/email`, {
         params: { id: emailId },
       });
       fetchEmails();

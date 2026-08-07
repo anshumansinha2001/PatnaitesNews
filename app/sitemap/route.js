@@ -3,16 +3,20 @@ import ArticleModel from "@/lib/models/articleModel";
 import { SitemapStream, streamToPromise } from "sitemap";
 import { Readable } from "stream";
 
+// Cache the sitemap for an hour (regenerated on demand after that).
+export const revalidate = 3600;
+
 export async function GET(req) {
   await connectDB();
 
-  const hostname = `${process.env.NEXT_PUBLIC_DOMAIN}/`;
+  const siteUrl =
+    process.env.NEXT_PUBLIC_DOMAIN || "https://patnaites.vercel.app";
+  const hostname = `${siteUrl}/`;
 
-  // Fetch articles from the database
-  const articles = await ArticleModel.find(
-    {},
-    "slug category updatedAt"
-  ).exec();
+  // Fetch articles from the database (lean = plain objects, faster)
+  const articles = await ArticleModel.find({}, "slug category updatedAt")
+    .lean()
+    .exec();
 
   const sitemap = new SitemapStream({ hostname });
 

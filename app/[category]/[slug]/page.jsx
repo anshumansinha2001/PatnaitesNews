@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import axios from "axios";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,46 +12,20 @@ import AdsBottomCard from "@/components/AdsComponents/AdsBottomCard";
 import ReadingProgress from "@/components/ArticleComponents/ReadingProgress";
 import RelatedArticles from "@/components/ArticleComponents/RelatedArticles";
 import ScrollToTop from "@/components/ScrollToTop";
+import { getArticleBySlug } from "@/lib/data/articles";
+import { getBetweenAds } from "@/lib/data/ads";
+
+// Cache each article page and regenerate at most every 5 minutes (ISR).
+export const revalidate = 300;
 
 const Page = async ({ params }) => {
-  let article = null;
-
-  // Fetch the article from the API
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
-      {
-        params: { slug: params.slug },
-      },
-    );
-
-    article = response.data.article;
-
-    if (!article) {
-      return <PageNotFound />;
-    }
-  } catch (error) {
-    console.error("Error fetching article:", error);
-    return (
-      <p className="text-center text-3xl flex justify-center items-center h-screen">
-        There was a problem fetching the article. Please try again later.
-      </p>
-    );
+  // Read the article directly from the database (no self-HTTP round-trip).
+  const article = await getArticleBySlug(params.slug);
+  if (!article) {
+    return <PageNotFound />;
   }
 
-  //  Fetch betweend ads from API
-  //  Use an absolute URL for fetching ads to avoid any issues during SSR.
-  let betweensAds = null;
-
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN}/api/between-ad`,
-    );
-
-    betweensAds = response.data.ads;
-  } catch (error) {
-    console.log(error);
-  }
+  const betweensAds = await getBetweenAds();
 
   const shareUrl = `${
     process.env.NEXT_PUBLIC_DOMAIN
@@ -192,8 +165,8 @@ const Page = async ({ params }) => {
                 alt={article.title || "Article image"}
                 width={1280}
                 height={720}
-                loading="eager"
-                quality={100}
+                sizes="(max-width: 896px) 100vw, 896px"
+                priority
               />
             </div>
 
@@ -256,16 +229,10 @@ const Page = async ({ params }) => {
 
 // Generate metadata for the found article
 export async function generateMetadata({ params }) {
-  let article;
+  let article = null;
 
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
-      {
-        params: { slug: params.slug },
-      },
-    );
-    article = response.data.article;
+    article = await getArticleBySlug(params.slug);
   } catch (error) {
     console.error("Error fetching metadata:", error);
   }

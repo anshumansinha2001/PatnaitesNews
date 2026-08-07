@@ -16,10 +16,9 @@ const Report = ({ params }) => {
   useEffect(() => {
     const fetchArticle = async () => {
       try {
-        const { data } = await axios.get(
-          `${process.env.NEXT_PUBLIC_DOMAIN}/api/article`,
-          { params: { slug: params.slug } }
-        );
+        const { data } = await axios.get(`/api/article`, {
+          params: { slug: params.slug },
+        });
         setArticle(data.article);
       } catch (error) {
         console.error("Error fetching article:", error);
