@@ -61,56 +61,62 @@ const AdminReports = () => {
     return <LoadingAdmin />;
   }
 
-  if (reports.length === 0)
-    return (
-      <div className="text-2xl font-semibold flex justify-center items-center h-[80vh] text-gray-800">
-        Nobody has Reported yet!
-      </div>
-    );
-
   return (
-    <div className="h-screen px-0 md:px-28 mx-auto overflow-x-auto">
-      <h1 className="text-3xl font-bold my-6 text-center text-gray-800">
-        Reports ({reports.length})
+    <div className="px-5 py-8 md:px-10 md:py-10">
+      <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+        Reports
       </h1>
+      <p className="mt-1 text-sm text-muted">
+        {reports.length} report{reports.length === 1 ? "" : "s"} submitted
+      </p>
 
-      <div className="flex flex-wrap">
-        {reports.map((report) => (
-          <div
-            key={report._id}
-            className="bg-white max-w-[400px] rounded-lg shadow-md m-2 md:m-4 p-2 md:p-4"
-          >
-            <h2 className="text-xl font-semibold mb-2">
-              {report.articleTitle}
-            </h2>
-            <Link href={`/admin/update-news/${report.articleSlug}`}>
-              <Image
-                onClick={() => storeReportId(report._id)}
-                className="hover:scale-95 transition duration-300 ease-in-out"
-                src={report.articleImage}
-                width={400}
-                height={400}
-                alt={report.articleTitle}
-              />
-            </Link>
-            <p className="text-gray-600 mt-2">
-              <span className="font-bold">Reason:</span> {report.reason}
-            </p>
-            <p className="text-gray-600">
-              <span className="font-bold">Description:</span>{" "}
-              {report.description || "No description provided"}
-            </p>
-            <div className="mt-4 text-center">
-              <button
-                onClick={() => deleteReport(report._id)}
-                className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+      {reports.length === 0 ? (
+        <div className="mt-10 rounded-2xl border border-dashed border-gray-300 bg-white py-20 text-center text-muted">
+          Nobody has reported anything yet.
+        </div>
+      ) : (
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {reports.map((report) => (
+            <div
+              key={report._id}
+              className="flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm"
+            >
+              <Link
+                href={`/admin/update-news/${report.articleSlug}`}
+                className="relative block aspect-[16/10] overflow-hidden bg-gray-100"
               >
-                Delete Report
-              </button>
+                <Image
+                  onClick={() => storeReportId(report._id)}
+                  className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
+                  src={report.articleImage}
+                  width={400}
+                  height={250}
+                  alt={report.articleTitle}
+                />
+              </Link>
+              <div className="flex flex-1 flex-col p-5">
+                <h2 className="font-semibold text-ink">
+                  {report.articleTitle}
+                </h2>
+                <p className="mt-3 text-sm text-gray-600">
+                  <span className="font-semibold text-ink">Reason:</span>{" "}
+                  {report.reason}
+                </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  <span className="font-semibold text-ink">Description:</span>{" "}
+                  {report.description || "No description provided"}
+                </p>
+                <button
+                  onClick={() => deleteReport(report._id)}
+                  className="mt-auto pt-4 text-left text-sm font-semibold text-accent hover:underline"
+                >
+                  Delete report
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

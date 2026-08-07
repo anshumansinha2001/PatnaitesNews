@@ -43,16 +43,25 @@ const AdsDashboard = () => {
   }
 
   return (
-    <div className="w-full px-4">
-      <h1 className="text-3xl font-bold text-center my-20">Advertisements</h1>
-      <div className="flex gap-5 font-medium justify-around items-center">
-        <div className="text-center space-y-4">
-          <h2 className="text-xl">Total Between Ads:</h2>
-          <p className="text-5xl">{betweenAds.length}</p>
+    <div className="w-full px-5 py-8 md:px-10 md:py-10">
+      <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+        Promotions
+      </h1>
+      <p className="mt-1 text-sm text-muted">
+        Manage the advertisements shown across articles.
+      </p>
+
+      <div className="mt-8 grid max-w-xl grid-cols-2 gap-5">
+        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+          <p className="text-sm text-muted">Between Ads</p>
+          <p className="mt-2 text-4xl font-bold text-ink">
+            {betweenAds.length}
+            <span className="text-lg font-medium text-gray-400"> / 2</span>
+          </p>
         </div>
-        <div className="text-center space-y-4">
-          <h2 className="text-xl">Total Bottom Ads:</h2>
-          <p className="text-5xl">{bottomAds.length}</p>
+        <div className="rounded-2xl border border-gray-200 bg-white p-6">
+          <p className="text-sm text-muted">Bottom Ads</p>
+          <p className="mt-2 text-4xl font-bold text-ink">{bottomAds.length}</p>
         </div>
       </div>
     </div>

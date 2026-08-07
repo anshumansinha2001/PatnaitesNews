@@ -87,49 +87,63 @@ const AdminAdsPost = ({ ad, location, route }) => {
   if (loading) return <LoadingAdmin />;
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-5 justify-start items-center"
-    >
-      {/* Image Upload Section */}
-      <div>
-        <p className="text-xl text-center">Upload Ad Image</p>
-        <label htmlFor="image">
-          <Image
-            className="mt-4 w-[350px] h-[200px] hover:cursor-pointer"
-            src={imagePreview}
-            alt="upload_area"
-            width={500}
-            height={400}
-          />
-        </label>
-        <input
-          onChange={(e) => setImage(e.target.files[0])}
-          type="file"
-          id="image"
-          hidden
-        />
-      </div>
+    <div className="w-full px-5 py-8 md:px-10 md:py-10">
+      <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+        {ad ? "Edit Advertisement" : "Create Advertisement"}
+      </h1>
 
-      {/* Link Input */}
-      <div>
-        <p className="text-xl mt-4">Link :</p>
-        <input
-          {...register("link")}
-          className="w-full sm:w-[500px] h-10 border border-black rounded-lg px-3"
-          type="text"
-          placeholder="Link of this Advertisement"
-        />
-      </div>
-
-      {/* Submit Button */}
-      <button
-        className="w-full sm:w-[500px] h-10 bg-black text-white rounded-lg px-3 mt-4 active:bg-blue-600 active:text-white"
-        type="submit"
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-6 max-w-xl space-y-6 rounded-2xl border border-gray-200 bg-white p-6 md:p-8"
       >
-        Submit
-      </button>
-    </form>
+        {/* Image Upload Section */}
+        <div>
+          <p className="mb-1.5 block text-sm font-semibold text-ink">
+            Ad Image
+          </p>
+          <label htmlFor="image" className="block w-fit cursor-pointer">
+            <Image
+              className="h-[200px] w-[350px] rounded-xl border border-gray-200 object-cover"
+              src={imagePreview}
+              alt="upload area"
+              width={350}
+              height={200}
+            />
+            <span className="mt-2 block text-xs text-muted">
+              Click the image to {image ? "change" : "upload"}
+            </span>
+          </label>
+          <input
+            onChange={(e) => setImage(e.target.files[0])}
+            type="file"
+            id="image"
+            accept="image/*"
+            hidden
+          />
+        </div>
+
+        {/* Link Input */}
+        <div>
+          <label className="mb-1.5 block text-sm font-semibold text-ink">
+            Link
+          </label>
+          <input
+            {...register("link")}
+            className="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-accent"
+            type="text"
+            placeholder="Link of this advertisement (optional)"
+          />
+        </div>
+
+        {/* Submit Button */}
+        <button
+          className="rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-dark"
+          type="submit"
+        >
+          {ad ? "Update Ad" : "Create Ad"}
+        </button>
+      </form>
+    </div>
   );
 };
 

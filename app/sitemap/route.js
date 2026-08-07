@@ -22,6 +22,7 @@ export async function GET(req) {
 
   // Add static pages
   sitemap.write({ url: "/", changefreq: "daily", priority: 1.0 });
+  sitemap.write({ url: "/about", changefreq: "monthly", priority: 0.6 });
   sitemap.write({ url: "/contact", changefreq: "monthly", priority: 0.7 });
 
   // Add dynamic pages (articles based on category and slug)

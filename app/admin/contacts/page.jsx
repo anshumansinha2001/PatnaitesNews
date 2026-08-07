@@ -48,41 +48,50 @@ const AdminContacts = () => {
 
   if (loading) return <LoadingAdmin />;
 
-  if (contacts.length === 0)
-    return (
-      <div className="text-2xl font-semibold flex justify-center items-center h-[80vh] text-gray-800">
-        Nobody has contacted yet!
-      </div>
-    );
-
   return (
-    <div className="h-screen px-0 md:px-28 mx-auto overflow-x-auto">
-      <h1 className="text-3xl font-bold my-6 text-center text-gray-800">
-        Contacts ({contacts.length})
+    <div className="px-5 py-8 md:px-10 md:py-10">
+      <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+        Contacts
       </h1>
+      <p className="mt-1 text-sm text-muted">
+        {contacts.length} message{contacts.length === 1 ? "" : "s"} received
+      </p>
 
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {contacts.map((contact) => (
-          <div
-            key={contact._id}
-            className="bg-white shadow-md rounded-lg p-6 flex flex-col justify-between"
-          >
-            <div>
-              <h2 className="text-xl font-semibold text-gray-800">
-                {contact.name}
-              </h2>
-              <p className="text-sm text-gray-600">{contact.email}</p>
-              <p className="mt-4 text-gray-700">{contact.message}</p>
-            </div>
-            <button
-              onClick={() => deleteContact(contact._id)}
-              className="mt-6 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition"
+      {contacts.length === 0 ? (
+        <div className="mt-10 rounded-2xl border border-dashed border-gray-300 bg-white py-20 text-center text-muted">
+          Nobody has contacted yet.
+        </div>
+      ) : (
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {contacts.map((contact) => (
+            <div
+              key={contact._id}
+              className="flex flex-col justify-between rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
             >
-              Delete
-            </button>
-          </div>
-        ))}
-      </div>
+              <div>
+                <h2 className="text-lg font-semibold text-ink">
+                  {contact.name}
+                </h2>
+                <a
+                  href={`mailto:${contact.email}`}
+                  className="text-sm text-accent hover:underline"
+                >
+                  {contact.email}
+                </a>
+                <p className="mt-4 text-sm leading-relaxed text-gray-600">
+                  {contact.message}
+                </p>
+              </div>
+              <button
+                onClick={() => deleteContact(contact._id)}
+                className="mt-6 w-fit rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

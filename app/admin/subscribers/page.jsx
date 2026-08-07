@@ -51,22 +51,21 @@ const Page = () => {
   }
 
   return (
-    <div className="flex-1 pt-5 sm:pt-12 sm:pl-16">
-      <h1 className="text-3xl font-bold">All Subscribers</h1>
+    <div className="px-5 py-8 md:px-10 md:py-10">
+      <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+        Subscribers
+      </h1>
+      <p className="mt-1 text-sm text-muted">
+        {emails.length} newsletter subscriber{emails.length === 1 ? "" : "s"}
+      </p>
 
-      <div className="relative max-w-[600px] h-[80vh] overflow-x-auto mt-4 border border-gray-400 scrollbar-hide">
-        <table className="w-full text-sm text-gray-500">
-          <thead className="text-xs text-left text-gray-700 uppercase bg-gray-50">
+      <div className="relative mt-6 max-h-[78vh] max-w-2xl overflow-auto rounded-2xl border border-gray-200 bg-white shadow-sm scrollbar-hide">
+        <table className="w-full text-sm text-gray-600">
+          <thead className="sticky top-0 bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500">
             <tr>
-              <th scope="col" className="px-6 py-3">
-                Email Subscription
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Data
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Action
-              </th>
+              <th className="px-6 py-4">Email Subscription</th>
+              <th className="px-6 py-4">Date</th>
+              <th className="px-6 py-4">Action</th>
             </tr>
           </thead>
 

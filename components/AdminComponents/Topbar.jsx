@@ -1,105 +1,95 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
-import { FaList, FaPlus } from "react-icons/fa";
-import { MdContactMail, MdReportProblem, MdUnsubscribe } from "react-icons/md";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import {
+  FiHome,
+  FiList,
+  FiPlus,
+  FiImage,
+  FiMail,
+  FiFlag,
+  FiUsers,
+  FiExternalLink,
+  FiLogOut,
+  FiMenu,
+  FiX,
+} from "react-icons/fi";
+
+const navItems = [
+  { href: "/admin", label: "Dashboard", Icon: FiHome, exact: true },
+  { href: "/admin/news-list", label: "News List", Icon: FiList },
+  { href: "/admin/create-news", label: "Add News", Icon: FiPlus },
+  { href: "/admin/ads", label: "Promotions", Icon: FiImage },
+  { href: "/admin/contacts", label: "Contacts", Icon: FiMail },
+  { href: "/admin/reports", label: "Reports", Icon: FiFlag },
+  { href: "/admin/subscribers", label: "Subscribers", Icon: FiUsers },
+];
 
 const Topbar = () => {
   const [open, setOpen] = useState(false);
-
-  const router = useRouter();
+  const pathname = usePathname();
 
   function handleLogout() {
-    const confirmation = window.confirm("Are you sure you want to log out?");
-    if (confirmation) {
+    if (window.confirm("Are you sure you want to log out?")) {
       localStorage.clear();
-      window.location.reload();
+      window.location.href = "/admin-login";
     }
   }
 
+  const isActive = (item) =>
+    item.exact ? pathname === item.href : pathname.startsWith(item.href);
+
   return (
-    <div className="flex sm:hidden flex-col bg-slate-100 w-full shadow-md p-4">
-      <nav className="flex justify-between items-center">
-        <Link href="/admin" className="text-2xl font-semibold">
-          Admin Panel
+    <div className="w-full bg-ink text-white">
+      <nav className="flex items-center justify-between px-5 py-4">
+        <Link href="/admin" className="font-serif text-lg font-bold">
+          Patnaites <span className="text-accent">Media</span>
         </Link>
         <button
           onClick={() => setOpen(!open)}
-          className="sm:hidden text-gray-600 focus:outline-none"
+          aria-label="Toggle menu"
+          className="text-white focus:outline-none"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+          {open ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
       </nav>
-      <section className={`${open ? "block" : "hidden"}`}>
-        <div className="flex flex-col mt-4 space-y-2 text-lg">
-          <Link
-            onClick={() => setOpen(!open)}
-            href="/admin/news-list"
-            className="flex justify-start items-center gap-2 hover:text-gray-900"
-          >
-            <FaList />
-            News List
-          </Link>
-          <Link
-            onClick={() => setOpen(!open)}
-            href="/admin/create-news"
-            className="flex justify-start items-center gap-2 hover:text-gray-900"
-          >
-            <FaPlus />
-            Add News
-          </Link>
 
+      {open && (
+        <div className="space-y-1 border-t border-white/10 px-3 py-3">
+          {navItems.map(({ href, label, Icon }) => (
+            <Link
+              key={href}
+              onClick={() => setOpen(false)}
+              href={href}
+              className={`flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
+                isActive({ href, exact: href === "/admin" })
+                  ? "bg-accent text-white"
+                  : "text-gray-300 hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              <Icon size={18} />
+              {label}
+            </Link>
+          ))}
           <Link
-            onClick={() => setOpen(!open)}
-            href="/admin/contacts"
-            className="flex justify-start items-center gap-2 hover:text-gray-900"
+            href="/"
+            target="_blank"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white"
           >
-            <MdContactMail />
-            Contacts
+            <FiExternalLink size={18} />
+            View Site
           </Link>
-          <Link
-            onClick={() => setOpen(!open)}
-            href="/admin/reports"
-            className="flex justify-start items-center gap-2 hover:text-gray-900"
-          >
-            <MdReportProblem />
-            Reports
-          </Link>
-          <Link
-            onClick={() => setOpen(!open)}
-            href="/admin/subscribers"
-            className="flex justify-start items-center gap-2 hover:text-gray-900"
-          >
-            <MdUnsubscribe /> Subscribers
-          </Link>
-          <button
-            onClick={() => router.push("/")}
-            className="text-sm font-medium bg-black text-white py-2 px-4 rounded"
-          >
-            Return Home
-          </button>
           <button
             onClick={handleLogout}
-            className="text-sm font-medium bg-black text-white py-2 px-4 rounded"
+            className="flex w-full items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium text-gray-300 hover:bg-accent hover:text-white"
           >
+            <FiLogOut size={18} />
             Log Out
           </button>
         </div>
-      </section>
+      )}
     </div>
   );
 };

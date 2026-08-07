@@ -23,25 +23,24 @@ export default function AdminLayout({ children }) {
     }
   }, [router]);
 
+  if (!isAdmin) return <LoadingAdmin />;
+
   return (
-    <>
-      {isAdmin ? (
-        <div className="block md:flex">
-          <ToastContainer theme="dark" position="top-right" />
+    <div className="min-h-screen bg-gray-50 md:flex">
+      <ToastContainer theme="dark" position="top-right" />
 
-          <div className="flex md:hidden">
-            <Topbar />
-          </div>
+      {/* Mobile top bar */}
+      <div className="md:hidden">
+        <Topbar />
+      </div>
 
-          <div className="hidden md:block">
-            <Sidebar />
-          </div>
+      {/* Desktop sidebar */}
+      <div className="hidden md:block">
+        <Sidebar />
+      </div>
 
-          <div className="flex flex-col w-full">{children}</div>
-        </div>
-      ) : (
-        <LoadingAdmin />
-      )}
-    </>
+      {/* Main content */}
+      <main className="min-w-0 flex-1">{children}</main>
+    </div>
   );
 }

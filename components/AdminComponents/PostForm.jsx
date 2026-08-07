@@ -152,118 +152,154 @@ const PostPage = ({ post }) => {
     return <LoadingAdmin />;
   }
 
+  const inputClass =
+    "w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-accent";
+  const labelClass = "mb-1.5 block text-sm font-semibold text-ink";
+
   return (
-    <>
+    <div className="px-5 py-8 md:px-10 md:py-10">
+      <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+        {post ? "Edit Article" : "Add News"}
+      </h1>
+      <p className="mt-1 text-sm text-muted">
+        {post
+          ? "Update the details of this story."
+          : "Fill in the details to publish a new story."}
+      </p>
+
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="pt-5 px-5 sm:pt-12 sm:pl-16 overflow-auto max-h-full md:max-h-screen"
+        className="mt-6 max-w-3xl space-y-6 rounded-2xl border border-gray-200 bg-white p-6 md:p-8"
       >
         {/* Thumbnail */}
-        <p className="text-xl">Upload thumbnail</p>
-        <label htmlFor="image">
-          <Image
-            className="mt-4 w-full md:w-[400px] h-[200px] hover:cursor-pointer"
-            src={imagePreview}
-            alt="upload_area"
-            width={200}
-            height={300}
+        <div>
+          <p className={labelClass}>Thumbnail</p>
+          <label htmlFor="image" className="block w-fit cursor-pointer">
+            <Image
+              className="h-[200px] w-full rounded-xl border border-gray-200 object-cover md:w-[400px]"
+              src={imagePreview}
+              alt="upload area"
+              width={400}
+              height={200}
+            />
+            <span className="mt-2 block text-xs text-muted">
+              Click the image to {image ? "change" : "upload"}
+            </span>
+          </label>
+          <input
+            onChange={(e) => setImage(e.target.files[0])}
+            type="file"
+            id="image"
+            accept="image/*"
+            hidden
           />
-        </label>
-        <input
-          onChange={(e) => setImage(e.target.files[0])}
-          type="file"
-          id="image"
-          hidden
-        />
+        </div>
 
         {/* Title */}
-        <p className="text-xl mt-4">News Title :</p>
-        <input
-          {...register("title", { required: true })}
-          className="w-full sm:w-[500px] h-10 border border-black rounded-lg px-3"
-          type="text"
-          placeholder="Title"
-        />
-        {errors.title && <p className="text-red-500">Title is required</p>}
+        <div>
+          <label className={labelClass}>News Title</label>
+          <input
+            {...register("title", { required: true })}
+            className={inputClass}
+            type="text"
+            placeholder="Title"
+          />
+          {errors.title && (
+            <p className="mt-1 text-sm text-accent">Title is required</p>
+          )}
+        </div>
 
         {/* Slug */}
-        <p className="text-xl mt-4">
-          Slug :
-          <span className="text-red-500 text-sm">
-            (try to write custom slug)
-          </span>
-        </p>
-        <input
-          {...register("slug", { required: true })}
-          className="w-full sm:w-[500px] h-10 border border-black rounded-lg px-3"
-          type="text"
-          placeholder="e.g: my-first-article"
-        />
-        {errors.slug && <p className="text-red-500">Slug is required</p>}
+        <div>
+          <label className={labelClass}>
+            Slug{" "}
+            <span className="font-normal text-muted">
+              (try to write a custom slug)
+            </span>
+          </label>
+          <input
+            {...register("slug", { required: true })}
+            className={inputClass}
+            type="text"
+            placeholder="e.g: my-first-article"
+          />
+          {errors.slug && (
+            <p className="mt-1 text-sm text-accent">Slug is required</p>
+          )}
+        </div>
 
-        {/* Category */}
-        <p className="text-xl mt-4">Category :</p>
-        <select
-          {...register("category", { required: true })}
-          id="category"
-          className="w-full sm:w-[500px] h-10 border border-black rounded-lg px-3"
-        >
-          <option>Trending</option>
-          <option>International</option>
-          <option>City</option>
-          <option>Business</option>
-          <option>Politics</option>
-          <option>Education</option>
-          <option>Technology</option>
-          <option>Religion</option>
-          <option>Crime</option>
-          <option>Entertainment</option>
-          <option>Lifestyle</option>
-          <option>Sports</option>
-          <option>Culture</option>
-          <option>Finance</option>
-          <option>Travel</option>
-          <option>Career</option>
-          <option>Health</option>
-          <option>Weather</option>
-          <option>Food</option>
-          <option>Fashion</option>
-          <option>Innovation</option>
-          <option>Environment</option>
-          <option>Science</option>
-          <option>Economy</option>
-          <option>Media</option>
-          <option>Opinion</option>
-          <option>Military-Defense</option>
-        </select>
+        {/* Category + Author */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label className={labelClass}>Category</label>
+            <select
+              {...register("category", { required: true })}
+              id="category"
+              className={inputClass}
+            >
+              <option>Trending</option>
+              <option>International</option>
+              <option>City</option>
+              <option>Business</option>
+              <option>Politics</option>
+              <option>Education</option>
+              <option>Technology</option>
+              <option>Religion</option>
+              <option>Crime</option>
+              <option>Entertainment</option>
+              <option>Lifestyle</option>
+              <option>Sports</option>
+              <option>Culture</option>
+              <option>Finance</option>
+              <option>Travel</option>
+              <option>Career</option>
+              <option>Health</option>
+              <option>Weather</option>
+              <option>Food</option>
+              <option>Fashion</option>
+              <option>Innovation</option>
+              <option>Environment</option>
+              <option>Science</option>
+              <option>Economy</option>
+              <option>Media</option>
+              <option>Opinion</option>
+              <option>Military-Defense</option>
+            </select>
+          </div>
 
-        {/* Author */}
-        <p className="text-xl mt-4">Author / Source :</p>
-        <input
-          {...register("author", { required: true })}
-          className="w-full sm:w-[500px] h-10 border border-black rounded-lg px-3"
-          type="text"
-          placeholder="Author"
-          defaultValue="Patnaites Media"
-        />
-        {errors.author && <p className="text-red-500">Author is required</p>}
+          <div>
+            <label className={labelClass}>Author / Source</label>
+            <input
+              {...register("author", { required: true })}
+              className={inputClass}
+              type="text"
+              placeholder="Author"
+              defaultValue="Patnaites Media"
+            />
+            {errors.author && (
+              <p className="mt-1 text-sm text-accent">Author is required</p>
+            )}
+          </div>
+        </div>
 
         {/* Description */}
-        <p className="text-xl mt-4">Description :</p>
-        <RTE defaultValue={post?.description} control={control} />
+        <div>
+          <label className={labelClass}>Description</label>
+          <RTE defaultValue={post?.description} control={control} />
+        </div>
 
         {/* Submit */}
-        <div className="flex flex-col md:flex-row gap-3 my-6">
+        <div className="flex flex-col gap-3 pt-2 sm:flex-row">
           <button
-            className="w-full sm:w-[500px] h-10 bg-black text-white rounded-lg px-3 active:bg-blue-600 active:text-white"
+            className="rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-dark"
             type="submit"
           >
-            Submit
+            {post ? "Update Article" : "Publish Article"}
           </button>
 
           {post && (
             <button
-              className="w-full sm:w-[500px] h-10 bg-red-500 text-white rounded-lg px-3 active:bg-blue-600 active:text-white"
+              className="rounded-lg border border-gray-200 px-6 py-2.5 text-sm font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
               type="button"
               onClick={() => deletePost(post._id)}
             >
@@ -272,7 +308,7 @@ const PostPage = ({ post }) => {
           )}
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

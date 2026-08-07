@@ -65,64 +65,52 @@ const Page = () => {
   }
 
   return (
-    <div className="flex-1 pt-5 px-5 sm:pt-12 sm:pl-16">
-      <h1 className="text-2xl md:text-3xl font-medium md:font-bold text-center">
-        All News ({articles.length})
-      </h1>
-
-      {/* Filter Option */}
-      <div className="flex w-fit my-2 rounded-md bg-black">
-        <div className="p-2">
-          <FaFilter className="text-white h-4 w-4" />
+    <div className="px-5 py-8 md:px-10 md:py-10">
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="font-serif text-2xl font-bold text-ink md:text-3xl">
+            All News
+          </h1>
+          <p className="mt-1 text-sm text-muted">
+            {articles.length} article{articles.length === 1 ? "" : "s"} published
+          </p>
         </div>
-        <select
-          className="bg-black text-white px-2 py-1 rounded-md outline-none"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option>All</option>
-          {
-            // Create a Set to hold unique categories
-            Array.from(
+
+        {/* Filter Option */}
+        <div className="flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-3 py-2">
+          <FaFilter className="h-3.5 w-3.5 text-muted" />
+          <select
+            className="bg-transparent text-sm outline-none"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option>All</option>
+            {Array.from(
               new Set(articles.map((article) => article.category))
             ).map((category, index) => (
               <option key={index} value={category}>
                 {category}
               </option>
-            ))
-          }
-        </select>
+            ))}
+          </select>
+        </div>
       </div>
 
-      <div className="relative max-h-[80vh] max-w-[100%] overflow-x-auto mt-4 shadow-lg rounded-lg scrollbar-hide">
-        <table className="w-full text-sm text-gray-500">
-          <thead className="text-sm text-gray-700 text-left uppercase bg-gray-200 sticky top-0 z-30">
+      <div className="relative mt-6 max-h-[78vh] overflow-auto rounded-2xl border border-gray-200 bg-white shadow-sm scrollbar-hide">
+        <table className="w-full text-sm text-gray-600">
+          <thead className="sticky top-0 z-20 bg-gray-50 text-left text-xs uppercase tracking-wide text-gray-500">
             <tr className="text-center">
-              <th scope="col" className="px-6 py-3">
-                Image
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Title
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Category
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Date
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Author
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Action
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Delete
-              </th>
+              <th className="px-6 py-4">Image</th>
+              <th className="px-6 py-4">Title</th>
+              <th className="px-6 py-4">Category</th>
+              <th className="px-6 py-4">Date</th>
+              <th className="px-6 py-4">Author</th>
+              <th className="px-6 py-4">Action</th>
+              <th className="px-6 py-4">Delete</th>
             </tr>
           </thead>
 
-          <tbody className="">
+          <tbody>
             {filteredArticles.map((article) => (
               <NewsTableItem
                 key={article._id}

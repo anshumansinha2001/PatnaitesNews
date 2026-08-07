@@ -31,15 +31,12 @@ const UpdateBottomAd = ({ params }) => {
 
   if (loading) return <LoadingAdmin />;
 
-  if (!ad) return <div>No ad found!</div>;
-  return (
-    <div className="w-full">
-      <h1 className="text-3xl font-bold text-center my-20  underline underline-offset-4">
-        Create Bottom Ads
-      </h1>
-      <AdminAdsPost ad={ad} location="bottom-ads" route="bottom-ad" />
-    </div>
-  );
+  if (!ad)
+    return (
+      <div className="px-5 py-10 text-muted md:px-10">No ad found!</div>
+    );
+
+  return <AdminAdsPost ad={ad} location="bottom-ads" route="bottom-ad" />;
 };
 
 export default UpdateBottomAd;

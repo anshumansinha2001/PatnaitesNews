@@ -3,6 +3,7 @@ import NewsCard from "./NewsCard";
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { FiSearch, FiX } from "react-icons/fi";
+import useHideOnScroll from "@/hooks/useHideOnScroll";
 
 const PER_PAGE = 22;
 
@@ -11,6 +12,10 @@ const stripHtml = (html = "") => html.replace(/(<([^>]+)>)/gi, " ");
 const NewsList = ({ initialArticles }) => {
   const hasInitial =
     Array.isArray(initialArticles) && initialArticles.length > 0;
+
+  // Keep the filter bar glued right under the navbar; when the navbar hides on
+  // scroll-down it slides up to the very top in sync.
+  const navHidden = useHideOnScroll();
 
   const [menu, setMenu] = useState("All");
   const [page, setPage] = useState(1);
@@ -102,7 +107,8 @@ const NewsList = ({ initialArticles }) => {
       {/* Search + category filter */}
       <div
         id="news-top"
-        className="sticky top-16 z-40 -mx-5 scroll-mt-16 border-b border-gray-200 bg-white/90 px-5 py-3 backdrop-blur-md md:-mx-8 md:px-8"
+        style={{ top: navHidden ? 0 : 64 }}
+        className="sticky z-40 -mx-5 scroll-mt-16 border-b border-gray-200 bg-white/90 px-5 py-3 backdrop-blur-md transition-[top] duration-300 md:-mx-8 md:px-8"
       >
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <div className="scrollbar-hide flex items-center gap-1 overflow-x-auto">
